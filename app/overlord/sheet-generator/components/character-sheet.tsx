@@ -11,6 +11,14 @@ export default function CharacterSheet() {
     portrait: [portraitImg, setPortraitImg],
     name: [characterName, setCharacterName],
     template: [templateImg, setTemplateImg],
+    portraitW: [portraitWidth, setPortraitWidth],
+    portraitH: [portraitHeight, setPortraitHeight],
+    portraitX: [portraitXPos, setPortraitXPos],
+    portraitY: [portraitYPos, setPortraitYPos],
+    templateW: [templateWidth, setTemplateWidth],
+    templateH: [templateHeight, setTemplateHeight],
+    templateX: [templateXPos, setTemplateXPos],
+    templateY: [templateYPos, setTemplateYPos],
   } = useSheetContext()
 
   useEffect(() => {
@@ -27,22 +35,26 @@ export default function CharacterSheet() {
   return (
     <SheetProvider>
       <div className="relative">
-        <div className="absolute ml-[3.5rem] mt-[2.4rem] z-0">
+        <div
+          className="absolute ml-[3.5rem] mt-[2.4rem] z-0"
+          style={{ width: portraitWidth, height: portraitHeight, left: portraitXPos, top: portraitYPos }}
+        >
           {imageSrc &&
             <Image 
               src={imageSrc}
               alt={characterName}
-              width={119}
-              height={100}
+              fill
             />
           }
         </div>
-        <div className="relative z-1">
+        <div 
+          className="relative z-1"
+          style={{ width: templateWidth, height: templateHeight, left: templateXPos, top: templateYPos }}
+        >
           <Image 
             src={templateImg}
             alt="sheet template"
-            width={400}
-            height={400}
+            fill
           />
         </div>
       </div>
