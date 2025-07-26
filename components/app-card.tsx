@@ -99,7 +99,7 @@ export function AppCardMenu({ apps }: {
       const dummiesNeeded = (cardsPerRow - (apps.length % cardsPerRow)) % cardsPerRow
       setDummyCardCount(dummiesNeeded)
     } else {
-      setDummyCardCount(0)
+      setDummyCardCount(cardsPerRow - apps.length)
     }
   }, [width, apps.length])
 
