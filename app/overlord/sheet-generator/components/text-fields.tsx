@@ -1,12 +1,50 @@
+import { useSheetContext } from "./sheet-context"
+import localFont from 'next/font/local'
+
+const packardAntique = localFont({
+  src: [
+    {
+      path: '../../fonts/PackardAntique.ttf',
+      weight: '400',
+      style: 'normal'
+    },
+    {
+      path: '../../fonts/PackardAntique-Bold.ttf',
+      weight: '700',
+      style: 'normal'
+    }
+  ]
+})
+
+const shipporiMincho = localFont({
+  src: '../../fonts/ShipporiMinchoB1-ExtraBold.ttf'
+})
+
+const calistoMT = localFont({
+  src: '../../fonts/CALIST.ttf'
+})
+
+const OPTIPaulDavid = localFont({
+  src: '../../fonts/OPTIPaulDavid.otf'
+})
+
+const deepdeneRoman = localFont({
+  src: '../../fonts/Deepdene\ Roman.ttf'
+})
+
 function Header() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
-
+      
     </>
   )
 }
 
 function Names() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -15,6 +53,8 @@ function Names() {
 }
 
 function Epithet() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -23,6 +63,8 @@ function Epithet() {
 }
 
 function Position() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -31,6 +73,8 @@ function Position() {
 }
 
 function Residence() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -39,6 +83,8 @@ function Residence() {
 }
 
 function Alignment() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -47,6 +93,8 @@ function Alignment() {
 }
 
 function Racials() {
+  const { state, dispatch } = useSheetContext()
+  
   return (
     <>
       
@@ -55,6 +103,8 @@ function Racials() {
 }
 
 function Classes() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -63,6 +113,8 @@ function Classes() {
 }
 
 function LevelsData() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
@@ -71,6 +123,8 @@ function LevelsData() {
 }
 
 function Stats() {
+  const { state, dispatch } = useSheetContext()
+
   return (
     <>
       
