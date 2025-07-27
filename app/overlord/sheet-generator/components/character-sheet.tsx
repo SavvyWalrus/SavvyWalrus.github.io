@@ -5,54 +5,103 @@ import { SheetProvider, useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { useEffect } from "react"
 
-export default function CharacterSheet() {
-  const [imageSrc, setImageSrc] = useState<string>()
-  const {
-    portrait: [portraitImg, setPortraitImg],
-    name: [characterName, setCharacterName],
-    template: [templateImg, setTemplateImg],
-    portraitW: [portraitWidth, setPortraitWidth],
-    portraitH: [portraitHeight, setPortraitHeight],
-    portraitX: [portraitXPos, setPortraitXPos],
-    portraitY: [portraitYPos, setPortraitYPos],
-    templateW: [templateWidth, setTemplateWidth],
-    templateH: [templateHeight, setTemplateHeight],
-    templateX: [templateXPos, setTemplateXPos],
-    templateY: [templateYPos, setTemplateYPos],
-  } = useSheetContext()
+export function CharacterSheet() {
+  const { state, dispatch } = useSheetContext()
 
-  useEffect(() => {
-    if (portraitImg) {
-      const objectUrl = URL.createObjectURL(portraitImg);
-      setImageSrc(objectUrl);
+  // TODO Image File handling rather than just URL in public folder
+  // const [imageSrc, setImageSrc] = useState<string>()
+  //
+  // useEffect(() => {
+  //   if (state.portrait) {
+  //     const objectUrl = URL.createObjectURL(state.portrait);
+  //     setImageSrc(objectUrl);
 
-      return () => URL.revokeObjectURL(objectUrl);
-    } else {
-      setImageSrc("/overlord/portraits/01-Momonga.jpg")
-    }
-  }, [portraitImg])
+  //     return () => URL.revokeObjectURL(objectUrl);
+  //   }
+  // }, [state.portrait])
+
+  return (
+    <SheetProvider>
+      <div className="sheet-container relative">
+        <div
+          className="portrait-container absolute ml-[3.5rem] mt-[2.4rem] z-0"
+          style={{ 
+            width: state.portraitW,
+            height: state.portraitH,
+            left: state.portraitX,
+            top: state.portraitY,
+          }}
+        >
+          <Image 
+            src={state.portrait}
+            alt={state.romajiName1}
+            fill
+          />
+        </div>
+        <div 
+          className="template-container relative z-1"
+          style={{ 
+            width: state.templateW,
+            height: state.templateH,
+            left: state.templateX,
+            top: state.templateY,
+          }}
+        >
+          <Image 
+            src={state.template}
+            alt="sheet template"
+            fill
+          />
+        </div>
+      </div>
+    </SheetProvider>
+  )
+}
+
+export function EditableCharacterSheet() {
+  const { state, dispatch } = useSheetContext()
+
+  // TODO Image File handling rather than just URL in public folder
+  // const [imageSrc, setImageSrc] = useState<string>()
+  //
+  // useEffect(() => {
+  //   if (state.portrait) {
+  //     const objectUrl = URL.createObjectURL(state.portrait);
+  //     setImageSrc(objectUrl);
+
+  //     return () => URL.revokeObjectURL(objectUrl);
+  //   }
+  // }, [state.portrait])
 
   return (
     <SheetProvider>
       <div className="relative">
         <div
           className="absolute ml-[3.5rem] mt-[2.4rem] z-0"
-          style={{ width: portraitWidth, height: portraitHeight, left: portraitXPos, top: portraitYPos }}
+          style={{ 
+            width: state.portraitW,
+            height: state.portraitH,
+            left: state.portraitX,
+            top: state.portraitY,
+          }}
         >
-          {imageSrc &&
-            <Image 
-              src={imageSrc}
-              alt={characterName}
-              fill
-            />
-          }
+          <Image 
+            src={state.portrait}
+            alt={state.romajiName1}
+            fill
+          />
         </div>
         <div 
           className="relative z-1"
-          style={{ width: templateWidth, height: templateHeight, left: templateXPos, top: templateYPos }}
+          style={{ 
+            width: state.templateW,
+            height: state.templateH,
+            left: state.templateX,
+            top: state.templateY,
+          }}
         >
           <Image 
-            src={templateImg}
+            src={state.template}
             alt="sheet template"
             fill
           />
