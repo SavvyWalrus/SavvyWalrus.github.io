@@ -56,7 +56,7 @@ function Names() {
   // Capitalizes all text other than that in parentheses and then wraps all letters 
   // following the first in a span, applying the passed in className
   const transformName = (name: string, className: string) => {
-    if (!name) return <p></p>
+    if (!name) return <></>
 
     const formattedName = name.split(' ').map((word, index) => {
       // Preserve the case for text inside parentheses
@@ -157,8 +157,14 @@ function Alignment() {
 
   return (
     <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
+      <p className="absolute top-[57.9cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+        Alignment 
+      </p>
+      <p className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+        {state.alignmentText}
+      </p>
+      <p className="absolute top-[57.9cqw] left-[69.5cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+        [Karma Value: {state.karmaValue}]
       </p>
     </>
   )
@@ -169,9 +175,82 @@ function Racials() {
   
   return (
     <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
+      <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+        Racial Levels
       </p>
+
+      {/* Builds entries based on value of 'visibleRacialClasses' */}
+      {Array.from({ length: state.visibleRacialClasses }, (_, index) => {
+        const classTop = 62.5 + (3.78 * index)
+        const levelTop = 61.3 + (3.78 * index)
+        const paddingLeft = index > 0 ? 3 : 1
+        const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
+        
+        return (
+          <div key={`racial-class-${index}`}>
+            <p 
+              className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+              style={{
+                top: `${classTop}cqw`,
+                paddingLeft: `${paddingLeft}cqw`,
+                left: `${leftOffset}cqw`
+              }}
+            >
+              {state.raceClasses[index]}
+            </p>
+            <p
+              className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+              style={{
+                top: `${levelTop}cqw`
+              }}
+            >
+              <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span>
+            </p>
+          </div>
+        )
+      })}
+
+      {state.raceOthers ? (() => {
+        const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
+
+        return (
+          <>
+            <p
+              className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
+              style={{
+                top: `${othersTop}cqw`
+              }}
+            >
+              ■■■■■■■■■■■■■■■■■■■■■■■
+            </p>
+            <p
+              className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
+              style={{
+                top: `${othersTop}cqw`
+              }}
+            >
+              Others
+            </p>
+          </>
+        )
+      })() : <></>}
+
+      {/* Hides template lines depending on if visibleJobClasses > 0 */}
+      {state.visibleJobClasses === 0 ? Array.from({ length: (8 - state.visibleRacialClasses)}, (_, index) => {
+        const maskTop = 62.5 + (3.78 * (7 - index))
+        
+        return (
+          <p
+            className="absolute left-[52cqw] text-[1.4cqw] bg-black"
+            style={{
+              top: `${maskTop}cqw`
+            }}
+            key={`racial-mask-${index}`}
+          >
+            ■■■■■■■■■■■■■■■■■■■■■■■
+          </p>
+        )
+      }) : <></>}
     </>
   )
 }
