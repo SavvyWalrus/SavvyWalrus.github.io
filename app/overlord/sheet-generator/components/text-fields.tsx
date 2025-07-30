@@ -32,6 +32,35 @@ const deepdeneRoman = localFont({
   src: '../../fonts/Deepdene\ Roman.ttf'
 })
 
+// Deepdene Roman's brackets are too low, so wrapping them with this component raises them by the specified amount
+function RaisedBracket({ children }: { children: string }) {
+  return <span className="relative top-[-0.18cqw]">{children}</span>
+}
+
+function StatBar({
+  height,
+  color,
+  lengthAtOneHundred,
+  val
+} : {
+  height: number,
+  color: string,
+  lengthAtOneHundred: number,
+  val: number
+}) {
+  const mult = val / 100
+
+  return (
+    <div
+      style={{
+        height: `${height}cqw`,
+        width: `${mult * lengthAtOneHundred}cqw`,
+        backgroundColor: color,
+      }}
+    />
+  )
+}
+
 function Header() {
   const { state, dispatch } = useSheetContext()
 
@@ -163,8 +192,8 @@ function Alignment() {
       <p className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
         {state.alignmentText}
       </p>
-      <p className="absolute top-[57.9cqw] left-[69.5cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
-        [Karma Value: {state.karmaValue}]
+      <p className="absolute top-[57.9cqw] left-[73cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+        <RaisedBracket>[</RaisedBracket>Karma Value: {state.karmaValue}<RaisedBracket>]</RaisedBracket>
       </p>
     </>
   )
@@ -200,7 +229,7 @@ function Racials() {
                 {state.raceClasses[index]}
               </p>
               <p
-                className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
                 style={{
                   top: `${levelTop}cqw`
                 }}
@@ -295,7 +324,7 @@ function Classes() {
                 {state.jobClasses[index]}
               </p>
               <p
-                className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
                 style={{
                   top: `${levelTop}cqw`
                 }}
@@ -361,13 +390,35 @@ function Classes() {
 function LevelsData() {
   const { state, dispatch } = useSheetContext()
 
-  return (
-    <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
-      </p>
-    </>
-  )
+  if (state.template.includes("Humanoid")) {
+    return <></>
+  } else {
+    return (
+      <>
+        <p className="absolute top-[94.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman] [word-spacing:0.2cqw] tracking-[0.02cqw]">
+          <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
+        </p>
+        <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          Racial Levels
+        </p>
+        <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          Class Levels
+        </p>
+        <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          {state.totalRaceLevels} acquired total
+        </p>
+        <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          {state.totalJobLevels} acquired total
+        </p>
+        <div className="racial-level-bar absolute top-[98.35cqw] left-[55.03cqw]">
+          <StatBar height={0.85} color="#af5845" lengthAtOneHundred={30.95} val={state.totalRaceLevels} />
+        </div>
+        <div className="job-level-bar absolute top-[98.35cqw] right-[14.02cqw]">
+          <StatBar height={0.85} color="#03a5a8" lengthAtOneHundred={30.95} val={state.totalJobLevels} />
+        </div>
+      </>
+    )
+  }
 }
 
 function Stats() {
