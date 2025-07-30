@@ -37,7 +37,15 @@ function Header() {
 
   return (
     <>
-      
+      <p className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw] font-[packardAntique]">
+        {state.sheetType}
+      </p>
+      <p className="absolute top-[2cqw] left-[27cqw] text-[7cqw] font-[OPTIPaulDavid]">
+        {state.sheetNum}
+      </p>
+      <p className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw] font-[packardAntique]">
+        {state.raceType}
+      </p>
     </>
   )
 }
@@ -134,7 +142,7 @@ function Stats() {
 
 export function TextFieldsRenderer() {
   return (
-    <>
+    <div className="@container w-full h-full">
       <Header />
       <Names />
       <Epithet />
@@ -145,6 +153,6 @@ export function TextFieldsRenderer() {
       <Classes />
       <LevelsData />
       <Stats />
-    </>
+    </div>
   )
 }

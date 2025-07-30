@@ -23,7 +23,7 @@ export function CharacterSheet() {
 
   return (
     <SheetProvider>
-      <div className="sheet-container relative max-w-[35em] max-h-[50em] aspect-[7/10]">
+      <div className="sheet-container relative max-w-[35rem] max-h-[50rem] min-h-[20rem] aspect-[7/10]">
         <div className="portrait-container absolute left-[14%] top-[6.95%] w-[29.7%] h-[63.5%] z-0">
           <div
             className=""
@@ -41,7 +41,7 @@ export function CharacterSheet() {
             />
           </div>
         </div>
-        <div className="fields-container absolute z-2">
+        <div className="fields-container absolute w-full h-full z-2">
           <TextFieldsRenderer />
         </div>
         <div
