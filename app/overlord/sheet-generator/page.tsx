@@ -9,7 +9,7 @@ import { CharacterSheet, EditableCharacterSheet } from "./components/character-s
 export default function OverlordSheetGenerator() {
   return (
     <SheetProvider>
-      <div className="flex gap-5 justify-center h-full w-full text-black">
+      <div className="flex gap-5 justify-center h-[95%] w-full text-black">
         <CharacterSheet />
       </div>
     </SheetProvider>

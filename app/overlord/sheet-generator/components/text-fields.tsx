@@ -426,9 +426,33 @@ function Stats() {
 
   return (
     <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
-      </p>
+      <div className="job-level-bar absolute top-[105.8cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.HP} />
+      </div>
+      <div className="job-level-bar absolute top-[109.5cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.MP} />
+      </div>
+      <div className="job-level-bar absolute top-[113.2cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalAttack} />
+      </div>
+      <div className="job-level-bar absolute top-[116.9cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalDefense} />
+      </div>
+      <div className="job-level-bar absolute top-[120.6cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.agility} />
+      </div>
+      <div className="job-level-bar absolute top-[124.3cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicAttack} />
+      </div>
+      <div className="job-level-bar absolute top-[128cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicDefense} />
+      </div>
+      <div className="job-level-bar absolute top-[131.7cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.resistance} />
+      </div>
+      <div className="job-level-bar absolute top-[135.4cqw] left-[36.1cqw]">
+        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.special} />
+      </div>
     </>
   )
 }
