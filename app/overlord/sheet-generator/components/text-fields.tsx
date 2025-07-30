@@ -53,9 +53,47 @@ function Header() {
 function Names() {
   const { state, dispatch } = useSheetContext()
 
+  // Capitalizes all text other than that in parentheses and then wraps all letters 
+  // following the first in a span, applying the passed in className
+  const transformName = (name: string, className: string) => {
+    if (!name) return <p></p>
+
+    const formattedName = name.split(' ').map((word, index) => {
+      // Preserve the case for text inside parentheses
+      if (word.startsWith('(')) {
+        return <span key={index}>{word} </span>
+      }
+
+      const firstLetter = word[0].toUpperCase()
+      const restOfLetters = word.slice(1).toUpperCase()
+      
+      return <span key={index}>{firstLetter}<span className={className}>{restOfLetters} </span></span>
+    })
+
+    return (
+      <>
+        {formattedName}
+      </>
+    )
+  }
+
   return (
     <>
-      
+      <p className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+        {transformName(state.romajiName1, "text-[3.8cqw]")}
+      </p>
+      <p className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+        {transformName(state.romajiName2, "text-[3.8cqw]")}
+      </p>
+      <p className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw] font-[packardAntique]">
+        {state.romajiSecondaryName}
+      </p>
+      <p className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] font-[shipporiMincho] tracking-[-0.4cqw]">
+        {state.katakanaName}
+      </p>
+      <p className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] font-[shipporiMincho] tracking-[-0.1cqw]">
+        {state.katakanaSecondaryName}
+      </p>
     </>
   )
 }
@@ -65,7 +103,9 @@ function Epithet() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -75,7 +115,9 @@ function Position() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -85,7 +127,9 @@ function Residence() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -95,7 +139,9 @@ function Alignment() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -105,7 +151,9 @@ function Racials() {
   
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -115,7 +163,9 @@ function Classes() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -125,7 +175,9 @@ function LevelsData() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
@@ -135,7 +187,9 @@ function Stats() {
 
   return (
     <>
-      
+      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
+        {}
+      </p>
     </>
   )
 }
