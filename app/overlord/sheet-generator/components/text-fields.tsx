@@ -205,7 +205,7 @@ function Racials() {
                   top: `${levelTop}cqw`
                 }}
               >
-                <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span>
+                {state.raceLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span></> : <></>}
               </p>
             </div>
           )
@@ -300,7 +300,7 @@ function Classes() {
                   top: `${levelTop}cqw`
                 }}
               >
-                <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.jobLevels[index]}</span>
+                {state.jobLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.jobLevels[index]}</span></> : <></>}
               </p>
             </div>
           )
