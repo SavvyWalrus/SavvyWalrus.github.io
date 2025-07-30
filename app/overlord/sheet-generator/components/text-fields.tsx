@@ -103,8 +103,14 @@ function Epithet() {
 
   return (
     <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
+      <p className="absolute top-[27.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+        {state.epithet1}
+      </p>
+      <p className="absolute top-[31.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+        {state.epithet2}
+      </p>
+      <p className="absolute top-[35.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+        {state.epithet3}
       </p>
     </>
   )
