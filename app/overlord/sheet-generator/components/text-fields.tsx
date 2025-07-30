@@ -174,96 +174,187 @@ function Racials() {
   const { state, dispatch } = useSheetContext()
   
   return (
-    <>
-      <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-        Racial Levels
-      </p>
+    state.visibleRacialClasses ? 
+      <>
+        <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          Racial Levels
+        </p>
 
-      {/* Builds entries based on value of 'visibleRacialClasses' */}
-      {Array.from({ length: state.visibleRacialClasses }, (_, index) => {
-        const classTop = 62.5 + (3.78 * index)
-        const levelTop = 61.3 + (3.78 * index)
-        const paddingLeft = index > 0 ? 3 : 1
-        const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
-        
-        return (
-          <div key={`racial-class-${index}`}>
-            <p 
-              className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
-              style={{
-                top: `${classTop}cqw`,
-                paddingLeft: `${paddingLeft}cqw`,
-                left: `${leftOffset}cqw`
-              }}
-            >
-              {state.raceClasses[index]}
-            </p>
+        {/* Builds entries based on value of 'visibleRacialClasses' */}
+        {Array.from({ length: state.visibleRacialClasses }, (_, index) => {
+          const classTop = 62.5 + (3.78 * index)
+          const levelTop = 61.3 + (3.78 * index)
+          const paddingLeft = index > 0 ? 3 : 1
+          const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
+          
+          return (
+            <div key={`racial-class-${index}`}>
+              <p 
+                className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                style={{
+                  top: `${classTop}cqw`,
+                  paddingLeft: `${paddingLeft}cqw`,
+                  left: `${leftOffset}cqw`
+                }}
+              >
+                {state.raceClasses[index]}
+              </p>
+              <p
+                className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                style={{
+                  top: `${levelTop}cqw`
+                }}
+              >
+                <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span>
+              </p>
+            </div>
+          )
+        })}
+
+        {state.raceOthers ? (() => {
+          const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
+
+          return (
+            <>
+              <p
+                className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
+                style={{
+                  top: `${othersTop}cqw`
+                }}
+              >
+                ■■■■■■■■■■■■■■■■■■■■■■■
+              </p>
+              <p
+                className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
+                style={{
+                  top: `${othersTop}cqw`
+                }}
+              >
+                Others
+              </p>
+            </>
+          )
+        })() : <></>}
+
+        {/* Hides template lines depending on if visibleJobClasses > 0 */}
+        {state.visibleJobClasses === 0 ? Array.from({ length: (8 - state.visibleRacialClasses)}, (_, index) => {
+          const maskTop = 62.5 + (3.78 * (7 - index))
+          
+          return (
             <p
-              className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+              className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2]"
               style={{
-                top: `${levelTop}cqw`
+                top: `${maskTop}cqw`
               }}
-            >
-              <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span>
-            </p>
-          </div>
-        )
-      })}
-
-      {state.raceOthers ? (() => {
-        const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
-
-        return (
-          <>
-            <p
-              className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
-              style={{
-                top: `${othersTop}cqw`
-              }}
+              key={`racial-mask-${index}`}
             >
               ■■■■■■■■■■■■■■■■■■■■■■■
             </p>
-            <p
-              className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
-              style={{
-                top: `${othersTop}cqw`
-              }}
-            >
-              Others
-            </p>
-          </>
-        )
-      })() : <></>}
-
-      {/* Hides template lines depending on if visibleJobClasses > 0 */}
-      {state.visibleJobClasses === 0 ? Array.from({ length: (8 - state.visibleRacialClasses)}, (_, index) => {
-        const maskTop = 62.5 + (3.78 * (7 - index))
-        
-        return (
-          <p
-            className="absolute left-[52cqw] text-[1.4cqw] bg-black"
-            style={{
-              top: `${maskTop}cqw`
-            }}
-            key={`racial-mask-${index}`}
-          >
-            ■■■■■■■■■■■■■■■■■■■■■■■
-          </p>
-        )
-      }) : <></>}
-    </>
+          )
+        }) : <></>}
+      </> 
+    : <></>
   )
 }
 
 function Classes() {
   const { state, dispatch } = useSheetContext()
+  const classTopOffset = state.visibleRacialClasses && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
+  const levelTopOffset = state.visibleRacialClasses && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
+  const totalFilledClasses = state.visibleJobClasses + state.visibleRacialClasses + (state.visibleRacialClasses > 0 && state.raceOthers ? 1 : 0) + (state.jobOthers ? 1 : 0)
 
   return (
-    <>
-      <p className="absolute top-[1cqw] left-[1cqw] text-[1cqw] font-[]">
-        {}
-      </p>
-    </>
+    state.visibleJobClasses ?
+      <>
+        <p
+          className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
+          style={{
+            top: `${classTopOffset}cqw`
+          }}
+        >
+          Class Levels
+        </p>
+
+        {/* Builds entries based on value of 'visibleJobClasses' */}
+        {Array.from({ length: state.visibleJobClasses }, (_, index) => {
+          const classTop = classTopOffset + (3.78 * index)
+          const levelTop = levelTopOffset + (3.78 * index)
+          const paddingLeft = index > 0 ? 3 : 1
+          const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
+          
+          return (
+            <div key={`job-class-${index}`}>
+              <p 
+                className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                style={{
+                  top: `${classTop}cqw`,
+                  paddingLeft: `${paddingLeft}cqw`,
+                  left: `${leftOffset}cqw`
+                }}
+              >
+                {state.jobClasses[index]}
+              </p>
+              <p
+                className={`absolute left-[76cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                style={{
+                  top: `${levelTop}cqw`
+                }}
+              >
+                <span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.jobLevels[index]}</span>
+              </p>
+            </div>
+          )
+        })}
+
+        {state.jobOthers ? (() => {
+          let othersTopOffset
+
+          if (state.visibleRacialClasses > 0) {
+            othersTopOffset = state.raceOthers ? 61.6 + (3.78 * (1 + state.visibleRacialClasses + state.visibleJobClasses)) : 61.6 + (3.78 * (state.visibleRacialClasses + state.visibleJobClasses))
+          } else {
+            othersTopOffset = 61.6 + (3.78 * state.visibleJobClasses)
+          }
+
+          return (
+            <>
+              <p
+                className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
+                style={{
+                  top: `${othersTopOffset}cqw`
+                }}
+              >
+                ■■■■■■■■■■■■■■■■■■■■■■■
+              </p>
+              <p
+                className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
+                style={{
+                  top: `${othersTopOffset}cqw`
+                }}
+              >
+                Others
+              </p>
+            </>
+          )
+        })() : <></>}
+
+        {/* Hides template lines depending on visibleRacialClasses, visibleJobClasses, and if they show others */}
+        {Array.from({ length: (8 - totalFilledClasses)}, (_, index) => {
+          const maskTop = 62.5 + (3.78 * (7 - index))
+          
+          return (
+            <p
+              className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2]"
+              style={{
+                top: `${maskTop}cqw`
+              }}
+              key={`racial-mask-${index}`}
+            >
+              ■■■■■■■■■■■■■■■■■■■■■■■
+            </p>
+          )
+        })}
+      </>
+    : <></>
   )
 }
 
