@@ -55,6 +55,7 @@ function StatBar({
 
   return (
     <div
+      className="ease-in-out duration-250"
       style={{
         height: `${height}cqw`,
         width: `${mult * lengthAtOneHundred}cqw`,
@@ -799,21 +800,39 @@ function LevelsData({ edit } : { edit?: boolean }) {
   } else {
     return (
       <>
-        <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] font-[deepdeneRoman] [word-spacing:0.1cqw] tracking-[0.01cqw]">
-          <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
-        </p>
-        <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[deepdeneRoman]">
-          Racial Levels
-        </p>
-        <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[deepdeneRoman]">
-          Class Levels
-        </p>
-        <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman]">
-          {state.totalRaceLevels} acquired total
-        </p>
-        <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[deepdeneRoman]">
-          {state.totalJobLevels} acquired total
-        </p>
+        {
+          edit ?
+            <>
+              <InputField
+                type="number"
+                field="totalRaceLevels"
+                classname="absolute top-[96cqw] left-[45cqw] w-[9.7cqw]"
+              />
+              <InputField
+                type="number"
+                field="totalJobLevels"
+                classname="absolute top-[96cqw] left-[86.5cqw] w-[9.7cqw]"
+              />
+            </>
+            :
+            <>
+              <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] font-[deepdeneRoman] [word-spacing:0.1cqw] tracking-[0.01cqw]">
+                <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
+              </p>
+              <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                Racial Levels
+              </p>
+              <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                Class Levels
+              </p>
+              <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                {state.totalRaceLevels} acquired total
+              </p>
+              <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                {state.totalJobLevels} acquired total
+              </p>
+            </>
+        }
         <div className="racial-level-bar absolute top-[98.35cqw] left-[55.03cqw]">
           <StatBar height={0.85} color="#af5845" lengthAtOneHundred={30.95} val={state.totalRaceLevels} />
         </div>
@@ -829,35 +848,84 @@ function Stats({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
-    <>
-      <div className="job-level-bar absolute top-[105.8cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.HP} />
-      </div>
-      <div className="job-level-bar absolute top-[109.5cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.MP} />
-      </div>
-      <div className="job-level-bar absolute top-[113.2cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalAttack} />
-      </div>
-      <div className="job-level-bar absolute top-[116.9cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalDefense} />
-      </div>
-      <div className="job-level-bar absolute top-[120.6cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.agility} />
-      </div>
-      <div className="job-level-bar absolute top-[124.3cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicAttack} />
-      </div>
-      <div className="job-level-bar absolute top-[128cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicDefense} />
-      </div>
-      <div className="job-level-bar absolute top-[131.7cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.resistance} />
-      </div>
-      <div className="job-level-bar absolute top-[135.4cqw] left-[36.1cqw]">
-        <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.special} />
-      </div>
-    </>
+    edit ?
+      <>
+        <InputField
+          type="number"
+          field="HP"
+          classname="job-level-bar absolute top-[105cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="MP"
+          classname="job-level-bar absolute top-[108.8cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="physicalAttack"
+          classname="job-level-bar absolute top-[112.5cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="physicalDefense"
+          classname="job-level-bar absolute top-[116.3cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="agility"
+          classname="job-level-bar absolute top-[120cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="magicAttack"
+          classname="job-level-bar absolute top-[123.8cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="magicDefense"
+          classname="job-level-bar absolute top-[127.6cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="resistance"
+          classname="job-level-bar absolute top-[131.4cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+        <InputField
+          type="number"
+          field="special"
+          classname="job-level-bar absolute top-[135.1cqw] left-[36.1cqw] h-[3cqw] w-[11cqw]"
+        />
+      </>
+      :
+      <>
+        <div className="job-level-bar absolute top-[105.8cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.HP} />
+        </div>
+        <div className="job-level-bar absolute top-[109.5cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.MP} />
+        </div>
+        <div className="job-level-bar absolute top-[113.2cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalAttack} />
+        </div>
+        <div className="job-level-bar absolute top-[116.9cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.physicalDefense} />
+        </div>
+        <div className="job-level-bar absolute top-[120.6cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.agility} />
+        </div>
+        <div className="job-level-bar absolute top-[124.3cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicAttack} />
+        </div>
+        <div className="job-level-bar absolute top-[128cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.magicDefense} />
+        </div>
+        <div className="job-level-bar absolute top-[131.7cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.resistance} />
+        </div>
+        <div className="job-level-bar absolute top-[135.4cqw] left-[36.1cqw]">
+          <StatBar height={1.6} color="#ac7fa8" lengthAtOneHundred={49.9} val={state.special} />
+        </div>
+      </>
   )
 }
 
@@ -873,7 +941,7 @@ export function FieldsRenderer({ edit } : { edit?: boolean }) {
       <Racials edit={edit} />
       <Classes edit={edit} />
       <LevelsData edit={edit} />
-      <Stats />
+      <Stats edit={edit} />
     </div>
   )
 }
