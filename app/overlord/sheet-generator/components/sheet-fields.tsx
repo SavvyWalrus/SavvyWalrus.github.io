@@ -1,4 +1,6 @@
-import { useSheetContext } from "./sheet-context"
+import { SheetState, useSheetContext } from "./sheet-context"
+import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 import localFont from 'next/font/local'
 
 const packardAntique = localFont({
@@ -61,25 +63,84 @@ function StatBar({
   )
 }
 
-function Header() {
+function InputField({
+  type,
+  field,
+  placeholder,
+  classname,
+} : {
+  type: string,
+  field: keyof SheetState,
+  placeholder?: string,
+  classname?: string,
+}) {
+  const { state, dispatch } = useSheetContext()
+
+  return (
+    <div>
+      <Input 
+        type={type}
+        placeholder={placeholder}
+        className={cn("!bg-white", classname)}
+        value={state[field] as string | number}
+        min={0}
+        onChange={(val) => {
+          dispatch({ type: "SET_FIELD", payload: { key: field, value: val.target.value } })
+        }}
+      />
+    </div>
+  )
+}
+
+function Header({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
     <>
-      <p className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw] font-[packardAntique]">
-        {state.sheetType}
-      </p>
-      <p className="absolute top-[2cqw] left-[27cqw] text-[7cqw] font-[OPTIPaulDavid]">
-        {state.sheetNum}
-      </p>
-      <p className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw] font-[packardAntique]">
-        {state.raceType}
-      </p>
+      {
+        edit ? 
+          <InputField 
+            type="text" 
+            placeholder="Sheet Type..." 
+            field="sheetType" 
+            classname="absolute top-[5.5cqw] left-[14cqw] w-26" 
+          /> 
+          : 
+          <p className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw] font-[packardAntique]">
+            {state.sheetType}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="number"
+            placeholder="Sheet Num..."
+            field="sheetNum"
+            classname="absolute top-[5.5cqw] left-[27cqw] w-20" 
+          />
+          :
+          <p className="absolute top-[2cqw] left-[27cqw] text-[7cqw] font-[OPTIPaulDavid] tracking-[-0.8cqw]">
+            {state.sheetNum}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Race..."
+            field="raceType"
+            classname="absolute top-[10.2cqw] left-[75.8cqw] w-30"
+          />
+          :
+          <p className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw] font-[packardAntique]">
+            {state.raceType}
+          </p>
+      }
     </>
   )
 }
 
-function Names() {
+function Names({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   // Capitalizes all text other than that in parentheses and then wraps all letters 
@@ -127,7 +188,7 @@ function Names() {
   )
 }
 
-function Epithet() {
+function Epithet({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
@@ -145,7 +206,7 @@ function Epithet() {
   )
 }
 
-function Position() {
+function Position({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
@@ -163,7 +224,7 @@ function Position() {
   )
 }
 
-function Residence() {
+function Residence({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
@@ -181,7 +242,7 @@ function Residence() {
   )
 }
 
-function Alignment() {
+function Alignment({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
@@ -199,7 +260,7 @@ function Alignment() {
   )
 }
 
-function Racials() {
+function Racials({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
   
   return (
@@ -286,7 +347,7 @@ function Racials() {
   )
 }
 
-function Classes() {
+function Classes({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
   const classTopOffset = state.visibleRacialClasses && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
   const levelTopOffset = state.visibleRacialClasses && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
@@ -387,7 +448,7 @@ function Classes() {
   )
 }
 
-function LevelsData() {
+function LevelsData({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   if (state.template.includes("Humanoid")) {
@@ -421,7 +482,7 @@ function LevelsData() {
   }
 }
 
-function Stats() {
+function Stats({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
 
   return (
@@ -457,18 +518,18 @@ function Stats() {
   )
 }
 
-export function FieldsRenderer() {
+export function FieldsRenderer({ edit } : { edit?: boolean }) {
   return (
     <div className="@container w-full h-full">
-      <Header />
-      <Names />
-      <Epithet />
-      <Position />
-      <Residence />
-      <Alignment />
-      <Racials />
-      <Classes />
-      <LevelsData />
+      <Header edit={edit} />
+      <Names edit={edit} />
+      <Epithet edit={edit} />
+      <Position edit={edit} />
+      <Residence edit={edit} />
+      <Alignment edit={edit} />
+      <Racials edit={edit} />
+      <Classes edit={edit} />
+      <LevelsData edit={edit} />
       <Stats />
     </div>
   )

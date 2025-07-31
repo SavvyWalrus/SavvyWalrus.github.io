@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { SheetProvider, useSheetContext } from "./sheet-context"
+import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { useEffect } from "react"
 import { FieldsRenderer } from "./sheet-fields"
@@ -22,43 +22,41 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   // }, [state.portrait])
 
   return (
-    <SheetProvider>
-      <div className="sheet-container relative min-h-[20rem] aspect-[7/10]">
-        <div className="portrait-container absolute left-[14%] top-[6.95%] w-[29.7%] h-[63.5%] z-0">
-          <div
-            className=""
-            style={{ 
-              width: `${state.portraitW}em`,
-              height: `${state.portraitH}em`,
-              left: `${state.portraitX}em`,
-              top: `${state.portraitY}em`,
-            }}
-          >
-            <Image 
-              src={state.portrait}
-              alt={state.romajiName1}
-              fill
-            />
-          </div>
-        </div>
-        <div className="fields-container absolute w-full h-full z-2">
-          <FieldsRenderer />
-        </div>
+    <div className="sheet-container relative min-h-[20rem] aspect-[7/10]">
+      <div className="portrait-container absolute left-[14%] top-[6.95%] w-[29.7%] h-[63.5%] z-0">
         <div
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            zIndex: '1'
+          className=""
+          style={{ 
+            width: `${state.portraitW}em`,
+            height: `${state.portraitH}em`,
+            left: `${state.portraitX}em`,
+            top: `${state.portraitY}em`,
           }}
         >
           <Image 
-            src={state.template}
-            alt="sheet template"
+            src={state.portrait}
+            alt={state.romajiName1}
             fill
           />
         </div>
       </div>
-    </SheetProvider>
+      <div className="fields-container absolute w-full h-full z-2">
+        <FieldsRenderer edit={edit} />
+      </div>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'relative',
+          zIndex: '1'
+        }}
+      >
+        <Image 
+          src={state.template}
+          alt="sheet template"
+          fill
+        />
+      </div>
+    </div>
   )
 }

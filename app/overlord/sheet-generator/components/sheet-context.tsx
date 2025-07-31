@@ -1,6 +1,7 @@
+import { useEffect } from "react"
 import { createContext, useContext, useReducer } from "react"
 
-type SheetState = {
+export type SheetState = {
   sheetType: string,
   raceType: string,
   sheetNum: number,
@@ -123,6 +124,10 @@ const SheetContext = createContext<{
 
 export function SheetProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(sheetReducer, initialState)
+
+  useEffect(() => {
+    console.log(state)
+  }, [state])
 
   return (
     <SheetContext.Provider value={{ state, dispatch }}>
