@@ -241,15 +241,45 @@ function Epithet({ edit } : { edit?: boolean }) {
 
   return (
     <>
-      <p className="absolute top-[27.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
-        {state.epithet1}
-      </p>
-      <p className="absolute top-[31.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
-        {state.epithet2}
-      </p>
-      <p className="absolute top-[35.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
-        {state.epithet3}
-      </p>
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Epithet 1..."
+            field="epithet1"
+            classname="absolute top-[28cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
+          />
+          :
+          <p className="absolute top-[27.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+            {state.epithet1}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Epithet 2..."
+            field="epithet2"
+            classname="absolute top-[32.5cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
+          />
+          :
+          <p className="absolute top-[31.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+            {state.epithet2}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Epithet 3..."
+            field="epithet3"
+            classname="absolute top-[37cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
+          />
+          :
+          <p className="absolute top-[35.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+            {state.epithet3}
+          </p>
+      }
     </>
   )
 }
@@ -262,12 +292,32 @@ function Position({ edit } : { edit?: boolean }) {
       <p className="absolute top-[44cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
         Position 
       </p>
-      <p className="absolute top-[44cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
-        {state.position1}
-      </p>
-      <p className="absolute top-[46cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
-        {state.position2}
-      </p>
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Position 1..."
+            field="position1"
+            classname="absolute top-[43.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[44cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+            {state.position1}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Position 2..."
+            field="position2"
+            classname="absolute top-[46.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[46cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+            {state.position2}
+          </p>
+      }
     </>
   )
 }
@@ -280,12 +330,32 @@ function Residence({ edit } : { edit?: boolean }) {
       <p className="absolute top-[51cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
         Residence 
       </p>
-      <p className="absolute top-[51cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
-        {state.residence1}
-      </p>
-      <p className="absolute top-[53cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
-        {state.residence2}
-      </p>
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Residence 1..."
+            field="residence1"
+            classname="absolute top-[50.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[51cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+            {state.residence1}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Residence 2..."
+            field="residence2"
+            classname="absolute top-[53.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[53cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+            {state.residence2}
+          </p>
+      }
     </>
   )
 }
