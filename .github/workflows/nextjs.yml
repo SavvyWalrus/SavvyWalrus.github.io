@@ -58,6 +58,13 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: |
+            **/pnpm-lock.yaml
+            **/package-lock.json
+            **/yarn.lock
+          check-latest: true
+          # This will auto-install pnpm if you specify it
+          pnpm-version: "latest"
       - name: Install pnpm
         if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
         run: npm install -g pnpm
