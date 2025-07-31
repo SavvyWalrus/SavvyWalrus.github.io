@@ -50,10 +50,23 @@ export type SheetState = {
   templateY: number,
 }
 
-type SheetAction = {
-  type: string,
-  payload: any,
-}
+export type SheetArrayFields =
+  | "raceClasses"
+  | "jobClasses"
+  | "raceLevels"
+  | "jobLevels"
+
+type SheetAction =
+  | { type: "SET"; payload: Partial<SheetState> }
+  | { type: "SET_FIELD"; payload: { key: keyof SheetState; value: any } }
+  | {
+      type: "SET_FIELD_INDEX"
+      payload: {
+        key: SheetArrayFields
+        index: number
+        value: any
+      }
+    }
 
 const initialState: SheetState = {
   sheetType: "Character",
@@ -111,6 +124,12 @@ function sheetReducer(state: SheetState, action: SheetAction): SheetState {
       return { ...state, ...action.payload }
     case "SET_FIELD":
       return { ...state, [action.payload.key]: action.payload.value }
+    case "SET_FIELD_INDEX": {
+      const { key, index, value } = action.payload
+      const array = [...state[key]]
+      array[index] = value
+      return { ...state, [key]: array }
+    }
     default:
       return state
   }

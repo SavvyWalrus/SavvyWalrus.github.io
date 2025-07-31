@@ -1,4 +1,5 @@
-import { SheetState, useSheetContext } from "./sheet-context"
+import { Checkbox } from "@/components/ui/checkbox"
+import { SheetArrayFields, SheetState, useSheetContext } from "./sheet-context"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import localFont from 'next/font/local'
@@ -65,28 +66,72 @@ function StatBar({
 
 function InputField({
   type,
+  checkbox,
   field,
+  index,
+  min=0,
+  max,
   placeholder,
   classname,
+  style
 } : {
   type: string,
-  field: keyof SheetState,
+  checkbox?: boolean,
+  field: keyof SheetState | SheetArrayFields,
+  index?: number
+  min?: number,
+  max?: number,
   placeholder?: string,
   classname?: string,
+  style?: any
 }) {
   const { state, dispatch } = useSheetContext()
 
+  const isArrayField = (key: keyof SheetState): key is SheetArrayFields =>
+    ["raceClasses", "jobClasses", "raceLevels", "jobLevels"].includes(key)
+
   return (
-    <Input 
-      type={type}
-      placeholder={placeholder}
-      className={cn("!bg-white !text-[1.7cqw]", classname)}
-      value={state[field] as string | number}
-      min={0}
-      onChange={(val) => {
-        dispatch({ type: "SET_FIELD", payload: { key: field, value: val.target.value } })
-      }}
-    />
+    checkbox ?
+      <Checkbox
+        checked={state[field] as boolean}
+        className={cn("!bg-white !text-[1.7cqw]", classname)}
+        style={style}
+        onCheckedChange={() =>
+          dispatch({
+            type: "SET_FIELD",
+            payload: { key: field, value: !state[field] }
+          })
+        }
+      />
+      :
+      <Input 
+        type={type}
+        placeholder={placeholder}
+        className={cn("!bg-white !text-[1.7cqw]", classname)}
+        value={
+          index !== undefined
+            ? (state[field] as any[])[index]
+            : (state[field] as string | number)
+        }
+        min={min}
+        max={max}
+        style={style}
+        onChange={(e) => {
+          const value = e.target.value
+
+          if (index !== undefined && isArrayField(field)) {
+            dispatch({
+              type: "SET_FIELD_INDEX",
+              payload: { key: field, index: index, value: value }
+            })
+          } else {
+            dispatch({
+              type: "SET_FIELD",
+              payload: { key: field, value: value }
+            })
+          }
+        }}
+      />
   )
 }
 
@@ -289,9 +334,14 @@ function Position({ edit } : { edit?: boolean }) {
 
   return (
     <>
-      <p className="absolute top-[44cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-        Position 
-      </p>
+      {
+        edit ? 
+          <></> 
+          : 
+          <p className="absolute top-[44cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+            Position
+          </p>
+      }
       {
         edit ?
           <InputField
@@ -327,9 +377,14 @@ function Residence({ edit } : { edit?: boolean }) {
 
   return (
     <>
-      <p className="absolute top-[51cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-        Residence 
-      </p>
+      {
+        edit ? 
+          <></> 
+          : 
+          <p className="absolute top-[51cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+            Residence 
+          </p>
+      }
       {
         edit ?
           <InputField
@@ -365,15 +420,42 @@ function Alignment({ edit } : { edit?: boolean }) {
 
   return (
     <>
-      <p className="absolute top-[57.9cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-        Alignment 
-      </p>
-      <p className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
-        {state.alignmentText}
-      </p>
-      <p className="absolute top-[57.9cqw] left-[73cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
-        <RaisedBracket>[</RaisedBracket>Karma Value: {state.karmaValue}<RaisedBracket>]</RaisedBracket>
-      </p>
+      {
+        edit ? 
+          <></> 
+          : 
+          <p className="absolute top-[57.9cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+            Alignment 
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Alignment..."
+            field="alignmentText"
+            classname="absolute top-[57.6cqw] left-[55.7cqw] w-[14cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+            {state.alignmentText}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="number"
+            min={-500}
+            max={500}
+            placeholder="Karma..."
+            field="karmaValue"
+            classname="absolute top-[57.6cqw] left-[72.7cqw] w-[12.5cqw] h-[2.7cqw] z-1"
+          />
+          :
+          <p className="absolute top-[57.9cqw] left-[73cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+            <RaisedBracket>[</RaisedBracket>Karma Value: {state.karmaValue}<RaisedBracket>]</RaisedBracket>
+          </p>
+      }
     </>
   )
 }
@@ -384,9 +466,25 @@ function Racials({ edit } : { edit?: boolean }) {
   return (
     state.visibleRacialClasses ? 
       <>
-        <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-          Racial Levels
-        </p>
+        {
+          edit ? 
+            <>
+              <p className="absolute top-[62.5cqw] left-[45cqw] text-[2cqw] font-[deepdeneRoman]">
+                Visible Racial Levels:
+              </p> 
+              <InputField
+                type="number"
+                field="visibleRacialClasses"
+                classname="absolute top-[62.7cqw] left-[62cqw] w-[10cqw] h-[2.7cqw] z-2"
+                min={0}
+                max={8}
+              />
+            </>
+            : 
+            <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+              Racial Levels
+            </p>
+        }
 
         {/* Builds entries based on value of 'visibleRacialClasses' */}
         {Array.from({ length: state.visibleRacialClasses }, (_, index) => {
@@ -396,30 +494,55 @@ function Racials({ edit } : { edit?: boolean }) {
           const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
           
           return (
-            <div key={`racial-class-${index}`}>
-              <p 
-                className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
-                style={{
-                  top: `${classTop}cqw`,
-                  paddingLeft: `${paddingLeft}cqw`,
-                  left: `${leftOffset}cqw`
-                }}
-              >
-                {state.raceClasses[index]}
-              </p>
-              <p
-                className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
-                style={{
-                  top: `${levelTop}cqw`
-                }}
-              >
-                {state.raceLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span></> : <></>}
-              </p>
-            </div>
+              edit ?
+                <div key={`racial-class-edit-${index}`}>
+                  <InputField
+                    type="text"
+                    placeholder={`Racial Class ${index}...`}
+                    field="raceClasses"
+                    index={index}
+                    classname="absolute left-[44cqw] w-[16cqw] h-[2.7cqw] z-2"
+                    style={{
+                      top: `${classTop * 0.8 + 15.6}cqw`
+                    }}
+                  />
+                  <InputField
+                    type="number"
+                    min={0}
+                    max={99}
+                    field="raceLevels"
+                    index={index}
+                    classname="absolute left-[60.3cqw] w-[11cqw] h-[2.7cqw] z-2"
+                    style={{
+                      top: `${classTop * 0.8 + 15.6}cqw`
+                    }}
+                  />
+                </div>
+                :
+                <div key={`racial-class-${index}`}>
+                  <p 
+                    className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                    style={{
+                      top: `${classTop}cqw`,
+                      paddingLeft: `${paddingLeft}cqw`,
+                      left: `${leftOffset}cqw`
+                    }}
+                  >
+                    {state.raceClasses[index]}
+                  </p>
+                  <p
+                    className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                    style={{
+                      top: `${levelTop}cqw`
+                    }}
+                  >
+                    {state.raceLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.raceLevels[index]}</span></> : <></>}
+                  </p>
+                </div>
           )
         })}
 
-        {state.raceOthers ? (() => {
+        {state.raceOthers && !edit ? (() => {
           const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
 
           return (
@@ -444,8 +567,33 @@ function Racials({ edit } : { edit?: boolean }) {
           )
         })() : <></>}
 
+        {
+          edit ?
+            <>
+              <p
+                className="absolute left-[45cqw] text-[2cqw] font-[deepdeneRoman]"
+                style={{
+                  top: `${65.5 + (3.4 * state.visibleRacialClasses) - (0.4 * state.visibleRacialClasses)}cqw`
+                }}
+              >
+                Others:
+              </p>
+              <InputField
+                type=""
+                checkbox={true}
+                field="raceOthers"
+                classname="absolute left-[51.5cqw]"
+                style={{
+                  top: `${65.5 + (3.4 * state.visibleRacialClasses) - (0.4 * state.visibleRacialClasses)}cqw`
+                }}
+              />
+            </>
+            :
+            <></>
+        }
+
         {/* Hides template lines depending on if visibleJobClasses > 0 */}
-        {state.visibleJobClasses === 0 ? Array.from({ length: (8 - state.visibleRacialClasses)}, (_, index) => {
+        {!edit && state.visibleJobClasses === 0 ? Array.from({ length: (8 - state.visibleRacialClasses)}, (_, index) => {
           const maskTop = 62.5 + (3.78 * (7 - index))
           
           return (
@@ -474,14 +622,30 @@ function Classes({ edit } : { edit?: boolean }) {
   return (
     state.visibleJobClasses ?
       <>
-        <p
-          className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
-          style={{
-            top: `${classTopOffset}cqw`
-          }}
-        >
-          Class Levels
-        </p>
+        {
+          edit ? 
+            <>
+              <p className="absolute top-[62.5cqw] left-[72.8cqw] text-[2cqw] font-[deepdeneRoman]">
+                Visible Racial Levels:
+              </p>
+              <InputField
+                type="number"
+                field="visibleJobClasses"
+                classname="absolute top-[62.7cqw] left-[90cqw] w-[10cqw] h-[2.7cqw] z-2"
+                min={0}
+                max={8}
+              />
+            </>
+            : 
+            <p
+              className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
+              style={{
+                top: `${classTopOffset}cqw`
+              }}
+            >
+              Class Levels
+            </p>
+        }
 
         {/* Builds entries based on value of 'visibleJobClasses' */}
         {Array.from({ length: state.visibleJobClasses }, (_, index) => {
@@ -491,30 +655,55 @@ function Classes({ edit } : { edit?: boolean }) {
           const leftOffset = paddingLeft > 1 ? 52.65 : 54.65
           
           return (
-            <div key={`job-class-${index}`}>
-              <p 
-                className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
-                style={{
-                  top: `${classTop}cqw`,
-                  paddingLeft: `${paddingLeft}cqw`,
-                  left: `${leftOffset}cqw`
-                }}
-              >
-                {state.jobClasses[index]}
-              </p>
-              <p
-                className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
-                style={{
-                  top: `${levelTop}cqw`
-                }}
-              >
-                {state.jobLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.jobLevels[index]}</span></> : <></>}
-              </p>
-            </div>
+            edit ?
+              <div key={`job-class-edit-${index}`}>
+                <InputField
+                  type="text"
+                  placeholder={`Job Class ${index}...`}
+                  field="jobClasses"
+                  index={index}
+                  classname="absolute left-[71.8cqw] w-[17cqw] h-[2.7cqw] z-2"
+                  style={{
+                    top: `${(62.5 + (3.78 * index)) * 0.8 + 15.6}cqw`
+                  }}
+                />
+                <InputField
+                  type="number"
+                  min={0}
+                  max={99}
+                  field="jobLevels"
+                  index={index}
+                  classname="absolute left-[89cqw] w-[11cqw] h-[2.7cqw] z-2"
+                  style={{
+                    top: `${(62.5 + (3.78 * index)) * 0.8 + 15.6}cqw`
+                  }}
+                />
+              </div>
+              :
+              <div key={`job-class-${index}`}>
+                <p 
+                  className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                  style={{
+                    top: `${classTop}cqw`,
+                    paddingLeft: `${paddingLeft}cqw`,
+                    left: `${leftOffset}cqw`
+                  }}
+                >
+                  {state.jobClasses[index]}
+                </p>
+                <p
+                  className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                  style={{
+                    top: `${levelTop}cqw`
+                  }}
+                >
+                  {state.jobLevels[index] > 0 ? <><span className="text-[2.7cqw] tracking-[-0.1cqw]">lvl </span><span className="text-[5cqw] tracking-[-0.8cqw]">{state.jobLevels[index]}</span></> : <></>}
+                </p>
+              </div>
           )
         })}
 
-        {state.jobOthers ? (() => {
+        {!edit && state.jobOthers ? (() => {
           let othersTopOffset
 
           if (state.visibleRacialClasses > 0) {
@@ -545,8 +734,33 @@ function Classes({ edit } : { edit?: boolean }) {
           )
         })() : <></>}
 
+        {
+          edit ?
+            <>
+              <p
+                className="absolute left-[72.8cqw] text-[2cqw] font-[deepdeneRoman]"
+                style={{
+                  top: `${65.5 + (3.4 * state.visibleJobClasses) - (0.4 * state.visibleJobClasses)}cqw`
+                }}
+              >
+                Others:
+              </p>
+              <InputField
+                type=""
+                checkbox={true}
+                field="jobOthers"
+                classname="absolute left-[79.2cqw]"
+                style={{
+                  top: `${65.5 + (3.4 * state.visibleJobClasses) - (0.4 * state.visibleJobClasses)}cqw`
+                }}
+              />
+            </>
+            :
+            <></>
+        }
+
         {/* Hides template lines depending on visibleRacialClasses, visibleJobClasses, and if they show others */}
-        {Array.from({ length: (8 - totalFilledClasses)}, (_, index) => {
+        {!edit && Array.from({ length: (8 - totalFilledClasses)}, (_, index) => {
           const maskTop = 62.5 + (3.78 * (7 - index))
           
           return (
@@ -574,7 +788,7 @@ function LevelsData({ edit } : { edit?: boolean }) {
   } else {
     return (
       <>
-        <p className="absolute top-[94.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman] [word-spacing:0.2cqw] tracking-[0.02cqw]">
+        <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] font-[deepdeneRoman] [word-spacing:0.1cqw] tracking-[0.01cqw]">
           <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
         </p>
         <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[deepdeneRoman]">

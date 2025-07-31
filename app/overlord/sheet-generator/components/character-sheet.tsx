@@ -51,11 +51,20 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
           zIndex: '1'
         }}
       >
-        <Image 
-          src={state.template}
-          alt="sheet template"
-          fill
-        />
+        {
+          edit ?
+            <Image 
+              src="/overlord/templates/Input-Template.png"
+              alt="sheet template"
+              fill
+            />
+            :
+            <Image 
+              src={state.template}
+              alt="sheet template"
+              fill
+            />
+        }
       </div>
     </div>
   )
