@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import localFont from 'next/font/local'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const packardAntique = localFont({
   src: [
     {
@@ -19,18 +20,22 @@ const packardAntique = localFont({
   ]
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const shipporiMincho = localFont({
   src: '../../fonts/ShipporiMinchoB1-ExtraBold.ttf'
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const calistoMT = localFont({
   src: '../../fonts/CALIST.ttf'
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIPaulDavid = localFont({
   src: '../../fonts/OPTIPaulDavid.otf'
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const deepdeneRoman = localFont({
   src: '../../fonts/Deepdene\ Roman.ttf'
 })
@@ -84,7 +89,7 @@ function InputField({
   max?: number,
   placeholder?: string,
   classname?: string,
-  style?: any
+  style?: object
 }) {
   const { state, dispatch } = useSheetContext()
 
@@ -111,7 +116,7 @@ function InputField({
         className={cn("!bg-white !text-[1.7cqw]", classname)}
         value={
           index !== undefined
-            ? (state[field] as any[])[index]
+            ? (state[field] as string[] | number[])[index]
             : (state[field] as number | string)
         }
         min={min}
@@ -138,7 +143,7 @@ function InputField({
 }
 
 function Header({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     <>
@@ -186,7 +191,7 @@ function Header({ edit } : { edit?: boolean }) {
 }
 
 function Names({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   // Capitalizes all text other than that in parentheses and then wraps all letters 
   // following the first in a span, applying the passed in className
@@ -284,7 +289,7 @@ function Names({ edit } : { edit?: boolean }) {
 }
 
 function Epithet({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     <>
@@ -332,7 +337,7 @@ function Epithet({ edit } : { edit?: boolean }) {
 }
 
 function Position({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     <>
@@ -375,7 +380,7 @@ function Position({ edit } : { edit?: boolean }) {
 }
 
 function Residence({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     <>
@@ -418,7 +423,7 @@ function Residence({ edit } : { edit?: boolean }) {
 }
 
 function Alignment({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     <>
@@ -463,7 +468,7 @@ function Alignment({ edit } : { edit?: boolean }) {
 }
 
 function Racials({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
   
   return (
     state.visibleRacialClasses ? 
@@ -621,7 +626,7 @@ function Racials({ edit } : { edit?: boolean }) {
 }
 
 function Classes({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
   const classTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
   const levelTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
   const totalFilledClasses = state.visibleJobClasses + state.visibleRacialClasses + (state.visibleRacialClasses > 0 && state.raceOthers ? 1 : 0) + (state.jobOthers ? 1 : 0)
@@ -793,7 +798,7 @@ function Classes({ edit } : { edit?: boolean }) {
 }
 
 function LevelsData({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   if (state.template.includes("Humanoid")) {
     return <></>
@@ -845,7 +850,7 @@ function LevelsData({ edit } : { edit?: boolean }) {
 }
 
 function Stats({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   return (
     edit ?

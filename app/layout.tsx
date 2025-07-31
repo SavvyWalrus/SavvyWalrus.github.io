@@ -4,7 +4,6 @@ import "./globals.css"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ModeToggle } from "@/components/theme-toggle"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

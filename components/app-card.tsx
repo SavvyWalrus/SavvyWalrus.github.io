@@ -12,14 +12,6 @@ export interface AppCardType {
   height: number
 }
 
-const dummyCard: AppCardType = {
-  title: "",
-  img: "",
-  url: "",
-  width: 0,
-  height: 0
-}
-
 // Used for calculating dummy card count
 // Must match classname values in AppCard, DummyCard, and AppCardMenu
 const cardWidth = 14
@@ -104,7 +96,7 @@ export function AppCardMenu({ apps }: {
   }, [width, apps.length])
 
   return (
-    <div ref={containerRef} className={`card-container my-3 flex flex-wrap justify-center m-auto gap-[1.2rem]`} >
+    <div ref={containerRef} className={`card-container my-10 flex flex-wrap justify-center m-auto gap-[1.2rem]`} >
       {apps.map(app => <AppCard key={app.title} settings={app} />)}
       {Array.from({ length: dummyCardCount }, (_, index) => (<DummyCard key={`dummy-${index}`} />))}
     </div>

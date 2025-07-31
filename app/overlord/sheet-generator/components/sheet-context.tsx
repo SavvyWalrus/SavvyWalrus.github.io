@@ -58,13 +58,13 @@ export type SheetArrayFields =
 
 type SheetAction =
   | { type: "SET"; payload: Partial<SheetState> }
-  | { type: "SET_FIELD"; payload: { key: keyof SheetState; value: any } }
+  | { type: "SET_FIELD"; payload: { key: keyof SheetState; value: string | number | boolean } }
   | {
       type: "SET_FIELD_INDEX"
       payload: {
         key: SheetArrayFields
         index: number
-        value: any
+        value: string | number
       }
     }
 

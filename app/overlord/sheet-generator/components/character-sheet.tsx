@@ -1,13 +1,11 @@
 "use client"
 
-import { useState } from "react"
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
-import { useEffect } from "react"
 import { FieldsRenderer } from "./sheet-fields"
 
 export function CharacterSheet({ edit } : { edit?: boolean }) {
-  const { state, dispatch } = useSheetContext()
+  const { state } = useSheetContext()
 
   // TODO Image File handling rather than just URL in public folder
   // const [imageSrc, setImageSrc] = useState<string>()
