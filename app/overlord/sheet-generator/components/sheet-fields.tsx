@@ -77,18 +77,16 @@ function InputField({
   const { state, dispatch } = useSheetContext()
 
   return (
-    <div>
-      <Input 
-        type={type}
-        placeholder={placeholder}
-        className={cn("!bg-white", classname)}
-        value={state[field] as string | number}
-        min={0}
-        onChange={(val) => {
-          dispatch({ type: "SET_FIELD", payload: { key: field, value: val.target.value } })
-        }}
-      />
-    </div>
+    <Input 
+      type={type}
+      placeholder={placeholder}
+      className={cn("!bg-white !text-[1.7cqw]", classname)}
+      value={state[field] as string | number}
+      min={0}
+      onChange={(val) => {
+        dispatch({ type: "SET_FIELD", payload: { key: field, value: val.target.value } })
+      }}
+    />
   )
 }
 
@@ -103,7 +101,7 @@ function Header({ edit } : { edit?: boolean }) {
             type="text" 
             placeholder="Sheet Type..." 
             field="sheetType" 
-            classname="absolute top-[5.5cqw] left-[14cqw] w-26" 
+            classname="absolute top-[5.5cqw] left-[14cqw] w-[12.5cqw] h-[4cqw]" 
           /> 
           : 
           <p className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw] font-[packardAntique]">
@@ -116,7 +114,7 @@ function Header({ edit } : { edit?: boolean }) {
             type="number"
             placeholder="Sheet Num..."
             field="sheetNum"
-            classname="absolute top-[5.5cqw] left-[27cqw] w-20" 
+            classname="absolute top-[5.5cqw] left-[27cqw] w-[9cqw] h-[4cqw]" 
           />
           :
           <p className="absolute top-[2cqw] left-[27cqw] text-[7cqw] font-[OPTIPaulDavid] tracking-[-0.8cqw]">
@@ -129,7 +127,7 @@ function Header({ edit } : { edit?: boolean }) {
             type="text"
             placeholder="Race..."
             field="raceType"
-            classname="absolute top-[10.2cqw] left-[75.8cqw] w-30"
+            classname="absolute top-[10.2cqw] left-[75.8cqw] w-[14cqw] h-[4cqw]"
           />
           :
           <p className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw] font-[packardAntique]">
@@ -169,21 +167,71 @@ function Names({ edit } : { edit?: boolean }) {
 
   return (
     <>
-      <p className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
-        {transformName(state.romajiName1, "text-[3.8cqw]")}
-      </p>
-      <p className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
-        {transformName(state.romajiName2, "text-[3.8cqw]")}
-      </p>
-      <p className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw] font-[packardAntique]">
-        {state.romajiSecondaryName}
-      </p>
-      <p className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] font-[shipporiMincho] tracking-[-0.4cqw]">
-        {state.katakanaName}
-      </p>
-      <p className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] font-[shipporiMincho] tracking-[-0.1cqw]">
-        {state.katakanaSecondaryName}
-      </p>
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Romaji Name 1..."
+            field="romajiName1"
+            classname="absolute top-[10.4cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
+          />
+          :
+          <p className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+            {transformName(state.romajiName1, "text-[3.8cqw]")}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Romaji Name 2..."
+            field="romajiName2"
+            classname="absolute top-[14cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
+          />
+          :
+          <p className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+            {transformName(state.romajiName2, "text-[3.8cqw]")}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Romaji Secondary Name..."
+            field="romajiSecondaryName"
+            classname="absolute top-[17.6cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
+          />
+          :
+          <p className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw] font-[packardAntique]">
+            {state.romajiSecondaryName}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Katakana Name..."
+            field="katakanaName"
+            classname="absolute top-[21.5cqw] left-[45cqw] w-[29.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] font-[shipporiMincho] tracking-[-0.4cqw]">
+            {state.katakanaName}
+          </p>
+      }
+      {
+        edit ?
+          <InputField
+            type="text"
+            placeholder="Katakana Secondary Name..."
+            field="katakanaSecondaryName"
+            classname="absolute top-[24.3cqw] left-[45cqw] w-[29.5cqw] h-[2.7cqw]"
+          />
+          :
+          <p className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] font-[shipporiMincho] tracking-[-0.1cqw]">
+            {state.katakanaSecondaryName}
+          </p>
+      }
     </>
   )
 }

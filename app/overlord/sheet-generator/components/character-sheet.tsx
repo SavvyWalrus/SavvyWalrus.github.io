@@ -22,7 +22,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   // }, [state.portrait])
 
   return (
-    <div className="sheet-container relative min-h-[20rem] aspect-[7/10]">
+    <div className="sheet-container relative min-h-[50rem] aspect-[7/10]">
       <div className="portrait-container absolute left-[14%] top-[6.95%] w-[29.7%] h-[63.5%] z-0">
         <div
           className=""
