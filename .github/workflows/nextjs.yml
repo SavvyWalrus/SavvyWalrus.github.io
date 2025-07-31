@@ -34,12 +34,7 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
-            echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=pnpm" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/yarn.lock" ]; then
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
@@ -58,16 +53,6 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: |
-            **/pnpm-lock.yaml
-            **/package-lock.json
-            **/yarn.lock
-          check-latest: true
-          # This will auto-install pnpm if you specify it
-          pnpm-version: "latest"
-      - name: Install pnpm
-        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
-        run: npm install -g pnpm
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -86,32 +71,10 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-      # Install dependencies
-      - name: Install dependencies (pnpm)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
-        run: pnpm install
-
-      - name: Install dependencies (yarn)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'yarn' }}
-        run: yarn install
-
-      - name: Install dependencies (npm)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'npm' }}
-        run: npm ci
-
-      # Build
-      - name: Build with Next.js (pnpm)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
-        run: pnpm next build
-
-      - name: Build with Next.js (yarn)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'yarn' }}
-        run: yarn next build
-
-      - name: Build with Next.js (npm)
-        if: ${{ steps.detect-package-manager.outputs.manager == 'npm' }}
-        run: npx --no-install next build
-
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
