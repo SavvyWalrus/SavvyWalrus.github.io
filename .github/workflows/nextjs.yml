@@ -79,10 +79,32 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      # Install dependencies
+      - name: Install dependencies (pnpm)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
+        run: pnpm install
+
+      - name: Install dependencies (yarn)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'yarn' }}
+        run: yarn install
+
+      - name: Install dependencies (npm)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'npm' }}
+        run: npm ci
+
+      # Build
+      - name: Build with Next.js (pnpm)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'pnpm' }}
+        run: pnpm next build
+
+      - name: Build with Next.js (yarn)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'yarn' }}
+        run: yarn next build
+
+      - name: Build with Next.js (npm)
+        if: ${{ steps.detect-package-manager.outputs.manager == 'npm' }}
+        run: npx --no-install next build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
