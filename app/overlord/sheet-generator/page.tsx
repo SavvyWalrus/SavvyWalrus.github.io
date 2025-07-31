@@ -1,16 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { SheetProvider, useSheetContext } from "./components/sheet-context"
-import Image from "next/image"
-import { useEffect } from "react"
-import { CharacterSheet, EditableCharacterSheet } from "./components/character-sheet"
+import { SheetProvider } from "./components/sheet-context"
+import { CharacterSheet } from "./components/character-sheet"
 
 export default function OverlordSheetGenerator() {
   return (
     <SheetProvider>
-      <div className="flex gap-5 justify-center h-[95%] w-full text-black">
+      <div className="flex gap-10 m-10 justify-center h-[75rem] w-full min-w-fit text-black">
         <CharacterSheet />
+        <CharacterSheet edit={true} />
       </div>
     </SheetProvider>
   )

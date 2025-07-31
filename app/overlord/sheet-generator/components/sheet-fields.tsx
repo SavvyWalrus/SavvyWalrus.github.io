@@ -457,7 +457,7 @@ function Stats() {
   )
 }
 
-export function TextFieldsRenderer() {
+export function FieldsRenderer() {
   return (
     <div className="@container w-full h-full">
       <Header />

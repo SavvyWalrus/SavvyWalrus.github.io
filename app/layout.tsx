@@ -39,13 +39,14 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full">
-              <div className="m-1">
-                <SidebarTrigger />
+            <main className="w-full overflow-x-auto">
+              <div className="fixed top-0 z-50">
+                <div className="p-1 sticky left-0">
+                  <SidebarTrigger className="bg-black opacity-70" />
+                </div>
               </div>
               {children}
             </main>
-            <ModeToggle />
           </SidebarProvider>
         </ThemeProvider>
       </body>
