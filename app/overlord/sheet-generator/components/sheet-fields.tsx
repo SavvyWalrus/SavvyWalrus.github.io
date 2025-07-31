@@ -111,13 +111,14 @@ function InputField({
         value={
           index !== undefined
             ? (state[field] as any[])[index]
-            : (state[field] as string | number)
+            : (state[field] as number | string)
         }
         min={min}
         max={max}
         style={style}
         onChange={(e) => {
-          const value = e.target.value
+          const raw = e.target.value
+          const value = type === "number" ? Number(raw) : raw
 
           if (index !== undefined && isArrayField(field)) {
             dispatch({
@@ -481,9 +482,14 @@ function Racials({ edit } : { edit?: boolean }) {
               />
             </>
             : 
-            <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
-              Racial Levels
-            </p>
+            (
+              state.visibleRacialClasses > 0 ?
+                <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                  Racial Levels
+                </p>
+                :
+                <></>
+            )
         }
 
         {/* Builds entries based on value of 'visibleRacialClasses' */}
@@ -615,8 +621,8 @@ function Racials({ edit } : { edit?: boolean }) {
 
 function Classes({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
-  const classTopOffset = state.visibleRacialClasses && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
-  const levelTopOffset = state.visibleRacialClasses && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
+  const classTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
+  const levelTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
   const totalFilledClasses = state.visibleJobClasses + state.visibleRacialClasses + (state.visibleRacialClasses > 0 && state.raceOthers ? 1 : 0) + (state.jobOthers ? 1 : 0)
 
   return (
@@ -637,14 +643,19 @@ function Classes({ edit } : { edit?: boolean }) {
               />
             </>
             : 
-            <p
-              className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
-              style={{
-                top: `${classTopOffset}cqw`
-              }}
-            >
-              Class Levels
-            </p>
+            (
+              state.visibleJobClasses > 0 ?
+                <p
+                  className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
+                  style={{
+                    top: `${classTopOffset}cqw`
+                  }}
+                >
+                  Class Levels
+                </p>
+                :
+                <></>
+            )
         }
 
         {/* Builds entries based on value of 'visibleJobClasses' */}
