@@ -120,6 +120,10 @@ function InputField({
         onChange={(e) => {
           const raw = e.target.value
           const value = type === "number" ? Number(raw) : raw
+          
+          if (max && typeof value === "number" && value > max) {
+            return
+          }
 
           if (index !== undefined && isArrayField(field)) {
             dispatch({
