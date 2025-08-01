@@ -27,7 +27,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
           />
         </div>
       </div>
-      <div className="fields-container absolute w-full h-full z-2">
+      <div className="fields-container absolute w-full h-full z-3">
         <FieldsRenderer edit={edit} />
       </div>
       {
