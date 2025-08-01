@@ -3,21 +3,10 @@
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
+import { PortraitUploader } from "./utils"
 
 export function CharacterSheet({ edit } : { edit?: boolean }) {
   const { state } = useSheetContext()
-
-  // TODO Image File handling rather than just URL in public folder
-  // const [imageSrc, setImageSrc] = useState<string>()
-  //
-  // useEffect(() => {
-  //   if (state.portrait) {
-  //     const objectUrl = URL.createObjectURL(state.portrait);
-  //     setImageSrc(objectUrl);
-
-  //     return () => URL.revokeObjectURL(objectUrl);
-  //   }
-  // }, [state.portrait])
 
   return (
     <div className="sheet-container relative min-h-[50rem] aspect-[7/10]">
@@ -41,6 +30,12 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       <div className="fields-container absolute w-full h-full z-2">
         <FieldsRenderer edit={edit} />
       </div>
+      {
+        edit &&
+          <div className="@container utils-container absolute w-full h-full z-2">
+            <PortraitUploader />
+          </div>
+      }
       <div
         style={{
           width: '100%',

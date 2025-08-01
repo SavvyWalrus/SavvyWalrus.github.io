@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import localFont from 'next/font/local'
 
-const packardAntique = localFont({
+export const packardAntique = localFont({
   src: [
     {
       path: '../../fonts/PackardAntique.ttf',
@@ -19,19 +19,19 @@ const packardAntique = localFont({
   ]
 })
 
-const shipporiMincho = localFont({
+export const shipporiMincho = localFont({
   src: '../../fonts/ShipporiMinchoB1-ExtraBold.ttf'
 })
 
-const calistoMT = localFont({
+export const calistoMT = localFont({
   src: '../../fonts/CALIST.ttf'
 })
 
-const OPTIPaulDavid = localFont({
+export const OPTIPaulDavid = localFont({
   src: '../../fonts/OPTIPaulDavid.otf'
 })
 
-const deepdeneRoman = localFont({
+export const deepdeneRoman = localFont({
   src: '../../fonts/Deepdene\ Roman.ttf'
 })
 
