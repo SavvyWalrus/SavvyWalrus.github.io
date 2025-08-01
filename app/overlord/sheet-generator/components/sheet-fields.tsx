@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import localFont from 'next/font/local'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const packardAntique = localFont({
   src: [
     {
@@ -20,22 +19,18 @@ const packardAntique = localFont({
   ]
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const shipporiMincho = localFont({
   src: '../../fonts/ShipporiMinchoB1-ExtraBold.ttf'
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const calistoMT = localFont({
   src: '../../fonts/CALIST.ttf'
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OPTIPaulDavid = localFont({
   src: '../../fonts/OPTIPaulDavid.otf'
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const deepdeneRoman = localFont({
   src: '../../fonts/Deepdene\ Roman.ttf'
 })
@@ -156,7 +151,10 @@ function Header({ edit } : { edit?: boolean }) {
             classname="absolute top-[5.5cqw] left-[14cqw] w-[12.5cqw] h-[4cqw]" 
           /> 
           : 
-          <p className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw] font-[packardAntique]">
+          <p
+            className="absolute top-[7.5cqw] left-[14cqw] text-[1.6cqw]"
+            style={packardAntique.style}
+          >
             {state.sheetType}
           </p>
       }
@@ -169,7 +167,10 @@ function Header({ edit } : { edit?: boolean }) {
             classname="absolute top-[5.5cqw] left-[27cqw] w-[9cqw] h-[4cqw]" 
           />
           :
-          <p className="absolute top-[2cqw] left-[27cqw] text-[7cqw] font-[OPTIPaulDavid] tracking-[-0.8cqw]">
+          <p
+            className="absolute top-[2cqw] left-[27cqw] text-[7cqw] tracking-[-0.8cqw]"
+            style={OPTIPaulDavid.style}
+          >
             {state.sheetNum}
           </p>
       }
@@ -182,7 +183,10 @@ function Header({ edit } : { edit?: boolean }) {
             classname="absolute top-[10.2cqw] left-[75.8cqw] w-[14cqw] h-[4cqw]"
           />
           :
-          <p className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw] font-[packardAntique]">
+          <p
+            className="absolute top-[10.2cqw] left-[75.8cqw] text-[1.9cqw]"
+            style={packardAntique.style}
+          >
             {state.raceType}
           </p>
       }
@@ -228,7 +232,10 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[10.4cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
           />
           :
-          <p className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+          <p
+            className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-bold tracking-[0.1cqw]"
+            style={packardAntique.style}
+          >
             {transformName(state.romajiName1, "text-[3.8cqw]")}
           </p>
       }
@@ -241,7 +248,10 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[14cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
           />
           :
-          <p className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-[packardAntique] font-bold tracking-[0.1cqw]">
+          <p
+            className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-bold tracking-[0.1cqw]"
+            style={packardAntique.style}
+          >
             {transformName(state.romajiName2, "text-[3.8cqw]")}
           </p>
       }
@@ -254,7 +264,10 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[17.6cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
           />
           :
-          <p className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw] font-[packardAntique]">
+          <p
+            className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw]"
+            style={packardAntique.style}
+          >
             {state.romajiSecondaryName}
           </p>
       }
@@ -267,7 +280,10 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[21.5cqw] left-[45cqw] w-[29.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] font-[shipporiMincho] tracking-[-0.4cqw]">
+          <p
+            className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] tracking-[-0.4cqw]"
+            style={shipporiMincho.style}
+          >
             {state.katakanaName}
           </p>
       }
@@ -280,7 +296,10 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[24.3cqw] left-[45cqw] w-[29.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] font-[shipporiMincho] tracking-[-0.1cqw]">
+          <p
+            className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] tracking-[-0.1cqw]"
+            style={shipporiMincho.style}
+          >
             {state.katakanaSecondaryName}
           </p>
       }
@@ -302,7 +321,10 @@ function Epithet({ edit } : { edit?: boolean }) {
             classname="absolute top-[28cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
           />
           :
-          <p className="absolute top-[27.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+          <p
+            className="absolute top-[27.5cqw] left-[45cqw] text-[3cqw] tracking-[0.1cqw]"
+            style={packardAntique.style}
+          >
             {state.epithet1}
           </p>
       }
@@ -315,7 +337,10 @@ function Epithet({ edit } : { edit?: boolean }) {
             classname="absolute top-[32.5cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
           />
           :
-          <p className="absolute top-[31.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+          <p
+            className="absolute top-[31.5cqw] left-[45cqw] text-[3cqw] tracking-[0.1cqw]"
+            style={packardAntique.style}
+          >
             {state.epithet2}
           </p>
       }
@@ -328,7 +353,10 @@ function Epithet({ edit } : { edit?: boolean }) {
             classname="absolute top-[37cqw] left-[45cqw] w-[29.5cqw] h-[4cqw]"
           />
           :
-          <p className="absolute top-[35.5cqw] left-[45cqw] text-[3cqw] font-[packardAntique] tracking-[0.1cqw]">
+          <p
+            className="absolute top-[35.5cqw] left-[45cqw] text-[3cqw] tracking-[0.1cqw]"
+            style={packardAntique.style}
+          >
             {state.epithet3}
           </p>
       }
@@ -345,7 +373,10 @@ function Position({ edit } : { edit?: boolean }) {
         edit ? 
           <></> 
           : 
-          <p className="absolute top-[44cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          <p
+            className="absolute top-[44cqw] left-[45cqw] text-[1.4cqw]"
+            style={deepdeneRoman.style}
+          >
             Position
           </p>
       }
@@ -358,7 +389,10 @@ function Position({ edit } : { edit?: boolean }) {
             classname="absolute top-[43.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[44cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+          <p
+            className="absolute top-[44cqw] left-[55.7cqw] text-[1.4cqw] tracking-[0.02cqw]"
+            style={deepdeneRoman.style}
+          >
             {state.position1}
           </p>
       }
@@ -371,7 +405,10 @@ function Position({ edit } : { edit?: boolean }) {
             classname="absolute top-[46.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[46cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+          <p
+            className="absolute top-[46cqw] left-[55.7cqw] text-[1.4cqw] tracking-[0.02cqw]"
+            style={deepdeneRoman.style}
+          >
             {state.position2}
           </p>
       }
@@ -388,7 +425,10 @@ function Residence({ edit } : { edit?: boolean }) {
         edit ? 
           <></> 
           : 
-          <p className="absolute top-[51cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          <p
+            className="absolute top-[51cqw] left-[45cqw] text-[1.4cqw]"
+            style={deepdeneRoman.style}
+          >
             Residence 
           </p>
       }
@@ -401,7 +441,10 @@ function Residence({ edit } : { edit?: boolean }) {
             classname="absolute top-[50.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[51cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+          <p
+            className="absolute top-[51cqw] left-[55.7cqw] text-[1.4cqw] tracking-[0.02cqw]"
+            style={deepdeneRoman.style}
+          >
             {state.residence1}
           </p>
       }
@@ -414,7 +457,10 @@ function Residence({ edit } : { edit?: boolean }) {
             classname="absolute top-[53.6cqw] left-[55.7cqw] w-[37.5cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[53cqw] left-[55.7cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw]">
+          <p
+            className="absolute top-[53cqw] left-[55.7cqw] text-[1.4cqw] tracking-[0.02cqw]"
+            style={deepdeneRoman.style}
+          >
             {state.residence2}
           </p>
       }
@@ -431,7 +477,10 @@ function Alignment({ edit } : { edit?: boolean }) {
         edit ? 
           <></> 
           : 
-          <p className="absolute top-[57.9cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+          <p
+            className="absolute top-[57.9cqw] left-[45cqw] text-[1.4cqw]"
+            style={deepdeneRoman.style}
+          >
             Alignment 
           </p>
       }
@@ -444,7 +493,10 @@ function Alignment({ edit } : { edit?: boolean }) {
             classname="absolute top-[57.6cqw] left-[55.7cqw] w-[14cqw] h-[2.7cqw]"
           />
           :
-          <p className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+          <p
+            className="absolute top-[57.9cqw] left-[55cqw] text-[1.4cqw] tracking-[0.02cqw] bg-[#eae5e2] px-1"
+            style={deepdeneRoman.style}
+          >
             {state.alignmentText}
           </p>
       }
@@ -459,7 +511,10 @@ function Alignment({ edit } : { edit?: boolean }) {
             classname="absolute top-[57.6cqw] left-[72.7cqw] w-[12.5cqw] h-[2.7cqw] z-1"
           />
           :
-          <p className="absolute top-[57.9cqw] left-[73cqw] text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1">
+          <p
+            className="absolute top-[57.9cqw] left-[73cqw] text-[1.4cqw] tracking-[0.02cqw] bg-[#eae5e2] px-1"
+            style={deepdeneRoman.style}
+          >
             <RaisedBracket>[</RaisedBracket>Karma Value: {state.karmaValue}<RaisedBracket>]</RaisedBracket>
           </p>
       }
@@ -476,7 +531,10 @@ function Racials({ edit } : { edit?: boolean }) {
         {
           edit ? 
             <>
-              <p className="absolute top-[62.5cqw] left-[45cqw] text-[2cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[62.5cqw] left-[45cqw] text-[2cqw]"
+                style={deepdeneRoman.style}
+              >
                 Visible Racial Levels:
               </p> 
               <InputField
@@ -490,7 +548,10 @@ function Racials({ edit } : { edit?: boolean }) {
             : 
             (
               state.visibleRacialClasses > 0 ?
-                <p className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]">
+                <p
+                  className="absolute top-[62.5cqw] left-[45cqw] text-[1.4cqw]"
+                  style={deepdeneRoman.style}
+                >
                   Racial Levels
                 </p>
                 :
@@ -533,8 +594,9 @@ function Racials({ edit } : { edit?: boolean }) {
                 :
                 <div key={`racial-class-${index}`}>
                   <p 
-                    className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                    className={`absolute text-[1.4cqw] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
                     style={{
+                      ...deepdeneRoman.style,
                       top: `${classTop}cqw`,
                       paddingLeft: `${paddingLeft}cqw`,
                       left: `${leftOffset}cqw`
@@ -543,8 +605,9 @@ function Racials({ edit } : { edit?: boolean }) {
                     {state.raceClasses[index]}
                   </p>
                   <p
-                    className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                    className={`absolute left-[79.5cqw] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
                     style={{
+                      ...OPTIPaulDavid.style,
                       top: `${levelTop}cqw`
                     }}
                   >
@@ -568,8 +631,9 @@ function Racials({ edit } : { edit?: boolean }) {
                 ■■■■■■■■■■■■■■■■■■■■■■■
               </p>
               <p
-                className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
+                className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2"
                 style={{
+                  ...deepdeneRoman.style,
                   top: `${othersTop}cqw`
                 }}
               >
@@ -583,8 +647,9 @@ function Racials({ edit } : { edit?: boolean }) {
           edit ?
             <>
               <p
-                className="absolute left-[45cqw] text-[2cqw] font-[deepdeneRoman]"
+                className="absolute left-[45cqw] text-[2cqw]"
                 style={{
+                  ...deepdeneRoman.style,
                   top: `${65.5 + (3.4 * state.visibleRacialClasses) - (0.4 * state.visibleRacialClasses)}cqw`
                 }}
               >
@@ -637,7 +702,10 @@ function Classes({ edit } : { edit?: boolean }) {
         {
           edit ? 
             <>
-              <p className="absolute top-[62.5cqw] left-[72.8cqw] text-[2cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[62.5cqw] left-[72.8cqw] text-[2cqw]"
+                style={deepdeneRoman.style}
+              >
                 Visible Racial Levels:
               </p>
               <InputField
@@ -652,8 +720,9 @@ function Classes({ edit } : { edit?: boolean }) {
             (
               state.visibleJobClasses > 0 ?
                 <p
-                  className="absolute left-[45cqw] text-[1.4cqw] font-[deepdeneRoman]"
+                  className="absolute left-[45cqw] text-[1.4cqw]"
                   style={{
+                    ...deepdeneRoman.style,
                     top: `${classTopOffset}cqw`
                   }}
                 >
@@ -699,8 +768,9 @@ function Classes({ edit } : { edit?: boolean }) {
               :
               <div key={`job-class-${index}`}>
                 <p 
-                  className={`absolute text-[1.4cqw] font-[deepdeneRoman] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
+                  className={`absolute text-[1.4cqw] tracking-[0.02cqw] bg-[#eae5e2] px-1`}
                   style={{
+                    ...deepdeneRoman.style,
                     top: `${classTop}cqw`,
                     paddingLeft: `${paddingLeft}cqw`,
                     left: `${leftOffset}cqw`
@@ -709,8 +779,9 @@ function Classes({ edit } : { edit?: boolean }) {
                   {state.jobClasses[index]}
                 </p>
                 <p
-                  className={`absolute left-[79.5cqw] font-[OPTIPaulDavid] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
+                  className={`absolute left-[79.5cqw] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
                   style={{
+                    ...OPTIPaulDavid.style,
                     top: `${levelTop}cqw`
                   }}
                 >
@@ -740,8 +811,9 @@ function Classes({ edit } : { edit?: boolean }) {
                 ■■■■■■■■■■■■■■■■■■■■■■■
               </p>
               <p
-                className="absolute left-[55.65cqw] text-[1.2cqw] font-[deepdeneRoman] bg-[#eae5e2] z-2"
+                className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2"
                 style={{
+                  ...deepdeneRoman.style,
                   top: `${othersTopOffset}cqw`
                 }}
               >
@@ -755,8 +827,9 @@ function Classes({ edit } : { edit?: boolean }) {
           edit ?
             <>
               <p
-                className="absolute left-[72.8cqw] text-[2cqw] font-[deepdeneRoman]"
+                className="absolute left-[72.8cqw] text-[2cqw]"
                 style={{
+                  ...deepdeneRoman.style,
                   top: `${65.5 + (3.4 * state.visibleJobClasses) - (0.4 * state.visibleJobClasses)}cqw`
                 }}
               >
@@ -821,19 +894,34 @@ function LevelsData({ edit } : { edit?: boolean }) {
             </>
             :
             <>
-              <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] font-[deepdeneRoman] [word-spacing:0.1cqw] tracking-[0.01cqw]">
+              <p
+                className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw]"
+                style={deepdeneRoman.style}
+              >
                 <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
               </p>
-              <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
                 Racial Levels
               </p>
-              <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
                 Class Levels
               </p>
-              <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
                 {state.totalRaceLevels} acquired total
               </p>
-              <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[deepdeneRoman]">
+              <p
+                className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
                 {state.totalJobLevels} acquired total
               </p>
             </>
