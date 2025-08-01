@@ -124,74 +124,72 @@ export function PortraitUploader() {
   }
 
   return (
-    <>
-      <div className="absolute top-[1cqw] left-[2cqw]">
-        {
-          hiddenFileInput &&
-            <input
-              type="file"
-              ref={hiddenFileInput ? hiddenFileInput as React.Ref<HTMLInputElement> : undefined}
-              onChange={handleImageChange}
-              style={{ display: 'none' }}
-            />
-        }
-        <Popover open={menuOpen} onOpenChange={setMenuOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="secondary"
-              role="combobox"
-              aria-expanded={menuOpen}
-              className="text-[1.5cqw] w-[25cqw] h-[3.7cqw] justify-between"
-            >
-              {imageURL
-                ? options.find((opt) => opt.value === imageURL)?.label
-                : "Select character portrait..."}
-              <ChevronsUpDown className="opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="p-0">
-            <Command>
-              <CommandList>
-                <CommandGroup>
+    <div className="absolute top-[1cqw] left-[2cqw] z-2">
+      {
+        hiddenFileInput &&
+          <input
+            type="file"
+            ref={hiddenFileInput ? hiddenFileInput as React.Ref<HTMLInputElement> : undefined}
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+      }
+      <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="secondary"
+            role="combobox"
+            aria-expanded={menuOpen}
+            className="text-[1.5cqw] w-[25cqw] h-[3.7cqw] justify-between"
+          >
+            {imageURL
+              ? options.find((opt) => opt.value === imageURL)?.label
+              : "Select character portrait..."}
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandList>
+              <CommandGroup>
+                <CommandItem
+                  key={"portrait-upload"}
+                  onSelect={() => {
+                    setMenuOpen(false)
+                    hiddenFileInput?.current?.click()
+                  }}
+                >
+                  Upload Img...
+                  <Upload className="ml-auto" />
+                </CommandItem>
+                <DropdownMenuSeparator />
+                {options.map((opt) => (
                   <CommandItem
-                    key={"portrait-upload"}
-                    onSelect={() => {
+                    key={opt.value}
+                    value={opt.value}
+                    onSelect={(currentValue) => {
+                      setImageURL(currentValue === imageURL ? imageURL : currentValue)
                       setMenuOpen(false)
-                      hiddenFileInput?.current?.click()
                     }}
                   >
-                    Upload Img...
-                    <Upload className="ml-auto" />
-                  </CommandItem>
-                  <DropdownMenuSeparator />
-                  {options.map((opt) => (
-                    <CommandItem
-                      key={opt.value}
-                      value={opt.value}
-                      onSelect={(currentValue) => {
-                        setImageURL(currentValue === imageURL ? imageURL : currentValue)
-                        setMenuOpen(false)
-                      }}
+                    <p
+                      className="text-nowrap"
                     >
-                      <p
-                        className="text-nowrap"
-                      >
-                        {opt.label}
-                      </p>
-                      <Check
-                        className={cn(
-                          "ml-auto",
-                          imageURL === opt.value ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-      </div>
-    </>
+                      {opt.label}
+                    </p>
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        imageURL === opt.value ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }
