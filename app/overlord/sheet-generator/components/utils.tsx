@@ -149,7 +149,7 @@ export function PortraitUploader() {
               <ChevronsUpDown className="opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[20cqw] p-0">
+          <PopoverContent className="p-0">
             <Command>
               <CommandList>
                 <CommandGroup>
@@ -173,7 +173,11 @@ export function PortraitUploader() {
                         setMenuOpen(false)
                       }}
                     >
-                      {opt.label}
+                      <p
+                        className="text-nowrap"
+                      >
+                        {opt.label}
+                      </p>
                       <Check
                         className={cn(
                           "ml-auto",
