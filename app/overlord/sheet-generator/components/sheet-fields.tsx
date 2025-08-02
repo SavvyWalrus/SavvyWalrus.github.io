@@ -168,7 +168,7 @@ function Header({ edit } : { edit?: boolean }) {
             type="number"
             placeholder="Sheet Num..."
             field="sheetNum"
-            classname="absolute top-[5.5cqw] left-[27cqw] w-[9cqw] h-[4cqw]" 
+            classname="absolute top-[5.5cqw] left-[27cqw] w-[11cqw] h-[4cqw]" 
           />
           :
           <p
@@ -237,10 +237,10 @@ function Names({ edit } : { edit?: boolean }) {
           />
           :
           <p
-            className="absolute top-[9.5cqw] left-[45cqw] text-[5cqw] font-bold tracking-[0.1cqw]"
+            className="absolute top-[9.5cqw] left-[45cqw] text-[4.3cqw] font-bold tracking-[0.1cqw]"
             style={packardAntique.style}
           >
-            {transformName(state.romajiName1, "text-[3.8cqw]")}
+            {transformName(state.romajiName1, "text-[3.1cqw]")}
           </p>
       }
       {
@@ -253,10 +253,10 @@ function Names({ edit } : { edit?: boolean }) {
           />
           :
           <p
-            className="absolute top-[14.5cqw] left-[45cqw] text-[5cqw] font-bold tracking-[0.1cqw]"
+            className="absolute top-[14.5cqw] left-[45cqw] text-[4.3cqw] font-bold tracking-[0.1cqw]"
             style={packardAntique.style}
           >
-            {transformName(state.romajiName2, "text-[3.8cqw]")}
+            {transformName(state.romajiName2, "text-[3.1cqw]")}
           </p>
       }
       {
@@ -269,7 +269,7 @@ function Names({ edit } : { edit?: boolean }) {
           />
           :
           <p
-            className="absolute top-[18cqw] left-[45cqw] text-[1.85cqw]"
+            className="absolute top-[18.5cqw] left-[45cqw] text-[1.95cqw]"
             style={packardAntique.style}
           >
             {state.romajiSecondaryName}
@@ -285,7 +285,7 @@ function Names({ edit } : { edit?: boolean }) {
           />
           :
           <p
-            className="absolute top-[20.8cqw] left-[45cqw] text-[3cqw] tracking-[-0.4cqw]"
+            className="absolute top-[20.8cqw] left-[45cqw] text-[2.6cqw] tracking-[-0.4cqw]"
             style={shipporiMincho.style}
           >
             {state.katakanaName}
@@ -301,7 +301,7 @@ function Names({ edit } : { edit?: boolean }) {
           />
           :
           <p
-            className="absolute top-[25.3cqw] left-[45cqw] text-[1cqw] tracking-[-0.1cqw]"
+            className="absolute top-[25.2cqw] left-[45cqw] text-[1.3cqw] tracking-[-0.21cqw]"
             style={shipporiMincho.style}
           >
             {state.katakanaSecondaryName}
@@ -878,7 +878,36 @@ function LevelsData({ edit } : { edit?: boolean }) {
   const { state } = useSheetContext()
 
   if (state.template.includes("Humanoid")) {
-    return <></>
+    return <>
+        {
+          edit ?
+            <>
+              <InputField
+                type="number"
+                field="totalJobLevels"
+                classname="absolute top-[97cqw] left-[86.5cqw] h-[4cqw] w-[11cqw]"
+              />
+            </>
+            :
+            <>
+              <p
+                className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
+                Class Levels
+              </p>
+              <p
+                className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw]"
+                style={deepdeneRoman.style}
+              >
+                {state.totalJobLevels} acquired total
+              </p>
+            </>
+        }
+        <div className="job-level-bar absolute top-[98.35cqw] left-[55.03cqw] max-w-[30.95cqw] overflow-hidden">
+          <StatBar height={0.85} color="#03a5a8" lengthAtOneHundred={30.95} val={state.totalJobLevels} />
+        </div>
+      </>
   } else {
     return (
       <>
@@ -888,12 +917,12 @@ function LevelsData({ edit } : { edit?: boolean }) {
               <InputField
                 type="number"
                 field="totalRaceLevels"
-                classname="absolute top-[96cqw] left-[45cqw] w-[9.7cqw]"
+                classname="absolute top-[97cqw] left-[43.9cqw] h-[4cqw] w-[11cqw]"
               />
               <InputField
                 type="number"
                 field="totalJobLevels"
-                classname="absolute top-[96cqw] left-[86.5cqw] w-[9.7cqw]"
+                classname="absolute top-[97cqw] left-[86.5cqw] h-[4cqw] w-[11cqw]"
               />
             </>
             :
@@ -930,10 +959,10 @@ function LevelsData({ edit } : { edit?: boolean }) {
               </p>
             </>
         }
-        <div className="racial-level-bar absolute top-[98.35cqw] left-[55.03cqw]">
+        <div className="racial-level-bar absolute top-[98.35cqw] left-[55.03cqw] max-w-[30.95cqw] overflow-hidden">
           <StatBar height={0.85} color="#af5845" lengthAtOneHundred={30.95} val={state.totalRaceLevels} />
         </div>
-        <div className="job-level-bar absolute top-[98.35cqw] right-[14.02cqw]">
+        <div className="job-level-bar absolute top-[98.35cqw] right-[14.02cqw] max-w-[30.95cqw] overflow-hidden">
           <StatBar height={0.85} color="#03a5a8" lengthAtOneHundred={30.95} val={state.totalJobLevels} />
         </div>
       </>

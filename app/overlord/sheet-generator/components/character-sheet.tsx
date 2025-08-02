@@ -9,8 +9,8 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   const { state } = useSheetContext()
 
   return (
-    <div className="sheet-container relative min-h-[50rem] aspect-[7/10]">
-      <div className="portrait-container absolute left-[14%] top-[6.95%] w-[29.7%] h-[63.5%] z-0">
+    <div className="sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden">
+      <div className="portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] z-0 bg-white">
         <div
           className=""
           style={{ 
