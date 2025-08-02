@@ -3,7 +3,7 @@
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
-import { PortraitUploader } from "./utils"
+import { PortraitUploader, PresetSelector } from "./utils"
 
 export function CharacterSheet({ edit } : { edit?: boolean }) {
   const { state } = useSheetContext()
@@ -34,6 +34,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
         edit &&
           <div className="@container utils-container absolute w-full h-full">
             <PortraitUploader />
+            <PresetSelector />
           </div>
       }
       <div

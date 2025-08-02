@@ -11,76 +11,105 @@ import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { useRef } from "react"
 
 interface Portrait {
-  value: string
+  loc: string
+  label: string
+}
+
+interface Preset {
+  loc: string
   label: string
 }
 
 const portraits: Portrait[] = [
   {
-    value: "/overlord/portraits/01-Momonga.jpg",
+    loc: "/overlord/portraits/01-Momonga.jpg",
     label: "01 Momonga",
   },
   {
-    value: "/overlord/portraits/02-Albedo.jpg",
+    loc: "/overlord/portraits/02-Albedo.jpg",
     label: "02 Albedo",
   },
   {
-    value: "/overlord/portraits/03-Aura.jpg",
+    loc: "/overlord/portraits/03-Aura.jpg",
     label: "03 Aura",
   },
   {
-    value: "/overlord/portraits/04-Mare.jpg",
+    loc: "/overlord/portraits/04-Mare.jpg",
     label: "04 Mare",
   },
   {
-    value: "/overlord/portraits/05-Cocytus.jpg",
+    loc: "/overlord/portraits/05-Cocytus.jpg",
     label: "05 Cocytus",
   },
   {
-    value: "/overlord/portraits/06-Demiurge.jpg",
+    loc: "/overlord/portraits/06-Demiurge.jpg",
     label: "06 Demiurge",
   },
   {
-    value: "/overlord/portraits/07-Narberal.jpg",
+    loc: "/overlord/portraits/07-Narberal.jpg",
     label: "07 Narberal",
   },
   {
-    value: "/overlord/portraits/09-Yuri.jpg",
+    loc: "/overlord/portraits/09-Yuri.jpg",
     label: "09 Yuri",
   },
   {
-    value: "/overlord/portraits/10-CZ.jpg",
+    loc: "/overlord/portraits/10-CZ.jpg",
     label: "10 CZ2128",
   },
   {
-    value: "/overlord/portraits/11-Shalltear.jpg",
+    loc: "/overlord/portraits/11-Shalltear.jpg",
     label: "11 Shalltear",
   },
   {
-    value: "/overlord/portraits/12-Pandora_s.jpg",
+    loc: "/overlord/portraits/12-Pandora_s.jpg",
     label: "12 Pandora's Actor",
   },
   {
-    value: "/overlord/portraits/17-Sebas.jpg",
+    loc: "/overlord/portraits/17-Sebas.jpg",
     label: "17 Sebas",
   },
   {
-    value: "/overlord/portraits/18-Solution.jpg",
+    loc: "/overlord/portraits/18-Solution.jpg",
     label: "18 Solution",
   },
   {
-    value: "/overlord/portraits/23-Victim.jpg",
+    loc: "/overlord/portraits/23-Victim.jpg",
     label: "23 Victim",
   },
   {
-    value: "/overlord/portraits/24-Entoma.jpg",
+    loc: "/overlord/portraits/24-Entoma.jpg",
     label: "24 Entoma",
   },
   {
-    value: "/overlord/portraits/38-Lupusregina.jpg",
+    loc: "/overlord/portraits/38-Lupusregina.jpg",
     label: "38 Lupusregina",
   },
 ]
+
+const presetFilenames: string[] = [
+  "Albedo.json",
+  "Aura Bella Fiora.json",
+  "Cocytus.json",
+  "CZ2128 Delta (Δ).json",
+  "Demiurge.json",
+  "Entoma Vasilissa Zeta (ζ).json",
+  "Lupusregina Beta (β).json",
+  "Mare Bello Fiore.json",
+  "Momonga.json",
+  "Narberal Gamma (Γ).json",
+  "Pandora's Actor.json",
+  "Sebas Tian.json",
+  "Shalltear Bloodfallen.json",
+  "Solution Epsilon (ε).json",
+  "Victim.json",
+  "Yuri Alpha (α).json",
+]
+
+const presets: Preset[] = presetFilenames.map((filename) => ({
+  loc: `/overlord/presets/${filename}`,
+  label: filename.replace(".json", ""),
+}))
 
 export function PortraitUploader() {
   const { dispatch } = useSheetContext()
@@ -98,9 +127,9 @@ export function PortraitUploader() {
     }
   }, [imageURL, dispatch])
 
-  function updateOptions(value: string, label: string) {
+  function updateOptions(loc: string, label: string) {
     const updatedOptions = [
-      { value: value, label: label },
+      { loc: loc, label: label },
       ...options
     ]
 
@@ -124,7 +153,7 @@ export function PortraitUploader() {
   }
 
   return (
-    <div className="absolute top-[1cqw] left-[2cqw] z-2">
+    <div className="absolute top-[0.5cqw] left-[23cqw] z-2">
       {
         hiddenFileInput &&
           <input
@@ -140,11 +169,15 @@ export function PortraitUploader() {
             variant="secondary"
             role="combobox"
             aria-expanded={menuOpen}
-            className="text-[1.5cqw] w-[25cqw] h-[3.7cqw] justify-between"
+            className="text-[1.5cqw] w-[25.5cqw] h-[3.7cqw] justify-between"
           >
-            {imageURL
-              ? options.find((opt) => opt.value === imageURL)?.label
-              : "Select character portrait..."}
+            <p className="max-w-full truncate">
+              {
+                imageURL
+                  ? options.find((opt) => opt.loc === imageURL)?.label
+                  : "Select character portrait..."
+              }
+            </p>
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -165,8 +198,8 @@ export function PortraitUploader() {
                 <DropdownMenuSeparator />
                 {options.map((opt) => (
                   <CommandItem
-                    key={opt.value}
-                    value={opt.value}
+                    key={opt.loc}
+                    value={opt.loc}
                     onSelect={(currentValue) => {
                       setImageURL(currentValue === imageURL ? imageURL : currentValue)
                       setMenuOpen(false)
@@ -180,7 +213,67 @@ export function PortraitUploader() {
                     <Check
                       className={cn(
                         "ml-auto",
-                        imageURL === opt.value ? "opacity-100" : "opacity-0"
+                        imageURL === opt.loc ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  )
+}
+
+export function PresetSelector() {
+  const { preset, setPreset } = useSheetContext()
+  const [menuOpen, setMenuOpen] = React.useState(false)
+  const [options, setOptions] = useState<Preset[]>(presets)
+
+  return (
+    <div className="absolute top-[0.5cqw] left-[2cqw] z-2">
+      <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="secondary"
+            role="combobox"
+            aria-expanded={menuOpen}
+            className="text-[1.5cqw] overflow-ellipsis w-[19cqw] h-[3.7cqw] justify-between"
+          >
+            <p className="max-w-full truncate">
+              {
+                preset
+                  ? options.find((opt) => opt.loc === preset)?.label
+                  : "Select preset..."
+              }
+            </p>
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandList>
+              <CommandGroup>
+                {options.map((opt) => (
+                  <CommandItem
+                    key={opt.loc}
+                    value={opt.loc}
+                    onSelect={(currentValue) => {
+                      setPreset(currentValue === preset ? preset : currentValue)
+                      setMenuOpen(false)
+                    }}
+                  >
+                    <p
+                      className="text-nowrap"
+                    >
+                      {opt.label}
+                    </p>
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        preset === opt.loc ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

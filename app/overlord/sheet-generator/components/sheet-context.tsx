@@ -1,4 +1,6 @@
-import { createContext, useContext, useReducer } from "react"
+import { createContext, useContext, useReducer, useState } from "react"
+import { promises as fs } from 'fs'
+import { useEffect } from 'react'
 
 export type SheetState = {
   sheetType: string,
@@ -68,6 +70,14 @@ type SheetAction =
       }
     }
 
+type SheetContextType = {
+  state: SheetState
+  dispatch: React.Dispatch<SheetAction>
+  preset: string
+  setPreset: React.Dispatch<React.SetStateAction<string>>
+}
+
+// Initial Momonga preset to avoid rerendering errors
 const initialState: SheetState = {
   sheetType: "Character",
   raceType: "Heteromorph",
@@ -135,16 +145,30 @@ function sheetReducer(state: SheetState, action: SheetAction): SheetState {
   }
 }
 
-const SheetContext = createContext<{
-  state: SheetState
-  dispatch: React.Dispatch<SheetAction>
-}>({ state: initialState, dispatch: () => {} })
+const SheetContext = createContext<SheetContextType>({
+  state: initialState, 
+  dispatch: () => {}, 
+  preset: "",
+  setPreset: () => {} 
+})
 
 export function SheetProvider({ children }: { children: React.ReactNode }) {
+  const [preset, setPreset] = useState<string>("/overlord/presets/Momonga.json")
   const [state, dispatch] = useReducer(sheetReducer, initialState)
 
+  useEffect(() => {
+    // Extracts JSON from preset and sets the new state
+    async function setter() {
+      const res = await fetch(preset)
+      const j = await res.json()
+      dispatch({ type: "SET", payload: j })
+    }
+
+    setter()
+  }, [preset])
+
   return (
-    <SheetContext.Provider value={{ state, dispatch }}>
+    <SheetContext.Provider value={{ state, dispatch, preset, setPreset }}>
       {children}
     </SheetContext.Provider>
   )
