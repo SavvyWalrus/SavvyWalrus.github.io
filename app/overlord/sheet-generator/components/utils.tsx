@@ -289,12 +289,12 @@ export function PresetSelector({ classname } : { classname?: string }) {
   )
 }
 
-export function EditImageToggle({
-  editImage,
-  setEditImage
+export function EditPortraitToggle({
+  editPortrait,
+  setEditPortrait
 } : {
-  editImage: boolean
-  setEditImage: Dispatch<SetStateAction<boolean>>
+  editPortrait: boolean
+  setEditPortrait: Dispatch<SetStateAction<boolean>>
 }) {
   return (
     <div
@@ -307,10 +307,10 @@ export function EditImageToggle({
         Edit Portrait:
       </p>
       <Checkbox
-        checked={editImage}
+        checked={editPortrait}
         className="!bg-white mx-[1cqw] my-[0.5cqw]"
         onCheckedChange={() =>
-          setEditImage(!editImage)
+          setEditPortrait(!editPortrait)
         }
       />
     </div>

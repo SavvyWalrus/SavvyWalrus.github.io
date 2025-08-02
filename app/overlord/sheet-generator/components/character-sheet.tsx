@@ -3,14 +3,14 @@
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
-import { EditImageToggle, PortraitUploader, PresetSelector } from "./utils"
+import { EditPortraitToggle, PortraitUploader, PresetSelector } from "./utils"
 import { useEffect, useRef, useState } from "react"
 import { Rnd } from "react-rnd"
 import { cn } from "@/lib/utils"
 
 export function CharacterSheet({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
-  const [editImage, setEditImage] = useState<boolean>(false)
+  const [editPortrait, setEditPortrait] = useState<boolean>(false)
 
   const portraitContainerRef = useRef<HTMLDivElement>(null)
   const [portraitContainerWidth, setPortraitContainerWidth] = useState(0)
@@ -34,11 +34,11 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   return (
     <div ref={portraitContainerRef} className={cn("sheet-container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
       <div
-        className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editImage && "z-4")}
+        className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editPortrait && "z-4")}
       >
         <Rnd
-          disableDragging={!editImage}
-          enableResizing={editImage}
+          disableDragging={!editPortrait}
+          enableResizing={editPortrait}
           position={{
             x: (state.portraitX),
             y: (state.portraitY),
@@ -95,7 +95,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
           }}
         >
           <Image 
-            className={`pointer-events-none ${editImage ? "opacity-30" : ""}`}
+            className={`pointer-events-none ${editPortrait ? "opacity-30" : ""}`}
             src={state.portrait}
             alt={state.romajiName1}
             fill
@@ -105,12 +105,12 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       {
         edit &&
           <div className="utils-container @container absolute w-full h-full">
-            <PresetSelector classname={cn(editImage && "pointer-events-none")} />
-            <PortraitUploader classname={cn(editImage && "pointer-events-none")} />
-            <EditImageToggle editImage={editImage} setEditImage={setEditImage} />
+            <PresetSelector classname={cn(editPortrait && "pointer-events-none")} />
+            <PortraitUploader classname={cn(editPortrait && "pointer-events-none")} />
+            <EditPortraitToggle editPortrait={editPortrait} setEditPortrait={setEditPortrait} />
           </div>
       }
-      <div className={cn("fields-container absolute w-full h-full z-2", editImage && 'pointer-events-none')}>
+      <div className={cn("fields-container absolute w-full h-full z-2", editPortrait && 'pointer-events-none')}>
         <FieldsRenderer edit={edit} />
       </div>
       <div
