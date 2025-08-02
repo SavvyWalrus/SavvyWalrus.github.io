@@ -605,7 +605,7 @@ function Racials({ edit } : { edit?: boolean }) {
                     left: `${leftOffset}cqw`
                   }}
                 >
-                  {state.raceClasses[index]}
+                  {state.raceClasses[index] || "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"}
                 </p>
                 <p
                   className={`absolute left-[79.5cqw] [word-spacing:-0.5cqw] leading-[3cqw] bg-[#eae5e2] px-1`}
@@ -621,36 +621,28 @@ function Racials({ edit } : { edit?: boolean }) {
       })}
 
       {
-        !edit ? (() => {
+        state.raceOthers && !edit ? (() => {
           const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
 
           return (
             <>
-              {
-                state.visibleRacialClasses > 0 && state.raceLevels[0] > 0 ?
-                  <p
-                    className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
-                    style={{
-                      top: `${othersTop}cqw`
-                    }}
-                  >
-                    ■■■■■■■■■■■■■■■■■■■■■■■
-                  </p>
-                  :
-                  <></>
-              }
-              {
-                state.visibleRacialClasses > 0 && state.raceOthers ?
-                  <p
-                    className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2"
-                    style={{
-                      ...deepdeneRoman.style,
-                      top: `${othersTop}cqw`
-                    }}
-                  >
-                    Others
-                  </p> : <></>
-              }
+              <p
+                className="absolute left-[52cqw] text-[1.4cqw] bg-[#eae5e2] text-[#eae5e2] z-1"
+                style={{
+                  top: `${othersTop}cqw`
+                }}
+              >
+                ■■■■■■■■■■■■■■■■■■■■■■■
+              </p>
+              <p
+                className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2"
+                style={{
+                  ...deepdeneRoman.style,
+                  top: `${othersTop}cqw`
+                }}
+              >
+                Others
+              </p>
             </>
           )
         })() : <></>
@@ -704,9 +696,9 @@ function Racials({ edit } : { edit?: boolean }) {
 
 function Classes({ edit } : { edit?: boolean }) {
   const { state } = useSheetContext()
-  const classTopOffset = state.visibleRacialClasses > 0 && state.raceLevels[0] > 0 ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
-  const levelTopOffset = state.visibleRacialClasses > 0 && state.raceLevels[0] > 0 ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
-  const totalFilledClasses = state.visibleJobClasses + state.visibleRacialClasses + (state.visibleRacialClasses > 0 ? 1 : 0) + (state.jobOthers ? 1 : 0)
+  const classTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 62.5 + (3.78 * (1 + state.visibleRacialClasses)) : 62.5 + (3.78 * state.visibleRacialClasses)
+  const levelTopOffset = state.visibleRacialClasses > 0 && state.raceOthers ? 61.3 + (3.78 * (1 + state.visibleRacialClasses)) : 61.3 + (3.78 * state.visibleRacialClasses)
+  const totalFilledClasses = state.visibleJobClasses + state.visibleRacialClasses + (state.visibleRacialClasses > 0 && state.raceOthers ? 1 : 0) + (state.jobOthers ? 1 : 0)
 
   return (
     <>
@@ -807,7 +799,7 @@ function Classes({ edit } : { edit?: boolean }) {
           let othersTopOffset
 
           if (state.visibleRacialClasses > 0) {
-            othersTopOffset = 61.6 + (3.78 * ((state.raceLevels[0] > 0 ? 1 : 0) + state.visibleRacialClasses + state.visibleJobClasses))
+            othersTopOffset = state.raceOthers ? 61.6 + (3.78 * (1 + state.visibleRacialClasses + state.visibleJobClasses)) : 61.6 + (3.78 * (state.visibleRacialClasses + state.visibleJobClasses))
           } else {
             othersTopOffset = 61.6 + (3.78 * state.visibleJobClasses)
           }
@@ -863,7 +855,7 @@ function Classes({ edit } : { edit?: boolean }) {
       }
 
       {/* Hides template lines depending on visibleRacialClasses, visibleJobClasses, and if they show others */}
-      {!edit && Array.from({ length: (8 - totalFilledClasses + (state.raceLevels[0] > 0 ? 0 : 1))}, (_, index) => {
+      {!edit && Array.from({ length: (8 - totalFilledClasses)}, (_, index) => {
         const maskTop = 62.5 + (3.78 * (7 - index))
         
         return (
