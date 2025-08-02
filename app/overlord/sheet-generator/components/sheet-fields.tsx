@@ -95,7 +95,7 @@ function InputField({
     checkbox ?
       <Checkbox
         checked={state[field] as boolean}
-        className={cn("!bg-white !text-[1.7cqw]", classname)}
+        className={cn("!bg-white", classname)}
         style={style}
         onCheckedChange={() =>
           dispatch({

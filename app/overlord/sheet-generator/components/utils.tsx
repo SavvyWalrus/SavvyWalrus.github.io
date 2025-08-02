@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { useState } from "react"
 import { useSheetContext } from "./sheet-context"
 import React from "react"
@@ -9,6 +9,8 @@ import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui
 import { cn } from "@/lib/utils"
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { useRef } from "react"
+import { Checkbox } from "@/components/ui/checkbox"
+import { deepdeneRoman } from "./sheet-fields"
 
 interface Portrait {
   loc: string
@@ -111,7 +113,7 @@ const presets: Preset[] = presetFilenames.map((filename) => ({
   label: filename.replace(".json", ""),
 }))
 
-export function PortraitUploader() {
+export function PortraitUploader({ classname } : { classname?: string }) {
   const { dispatch } = useSheetContext()
   const [menuOpen, setMenuOpen] = React.useState(false)
   const [imageURL, setImageURL] = useState<string>()
@@ -153,7 +155,7 @@ export function PortraitUploader() {
   }
 
   return (
-    <div className="absolute top-[0.5cqw] left-[23cqw] z-2">
+    <div className={cn("absolute top-[0.5cqw] left-[23cqw] z-3", classname)}>
       {
         hiddenFileInput &&
           <input
@@ -227,13 +229,13 @@ export function PortraitUploader() {
   )
 }
 
-export function PresetSelector() {
+export function PresetSelector({ classname } : { classname?: string }) {
   const { preset, setPreset } = useSheetContext()
   const [menuOpen, setMenuOpen] = React.useState(false)
   const [options, setOptions] = useState<Preset[]>(presets)
 
   return (
-    <div className="absolute top-[0.5cqw] left-[2cqw] z-2">
+    <div className={cn("absolute top-[0.5cqw] left-[2cqw] z-3", classname)}>
       <Popover open={menuOpen} onOpenChange={setMenuOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -283,6 +285,34 @@ export function PresetSelector() {
           </Command>
         </PopoverContent>
       </Popover>
+    </div>
+  )
+}
+
+export function EditImageToggle({
+  editImage,
+  setEditImage
+} : {
+  editImage: boolean
+  setEditImage: Dispatch<SetStateAction<boolean>>
+}) {
+  return (
+    <div
+      className="absolute flex top-[1cqw] left-[82cqw] z-5"
+    >
+      <p
+        className="text-[2.5cqw]"
+        style={deepdeneRoman.style}
+      >
+        Edit Portrait:
+      </p>
+      <Checkbox
+        checked={editImage}
+        className="!bg-white mx-[1cqw] my-[0.5cqw]"
+        onCheckedChange={() =>
+          setEditImage(!editImage)
+        }
+      />
     </div>
   )
 }

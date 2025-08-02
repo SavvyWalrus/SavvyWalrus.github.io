@@ -3,40 +3,116 @@
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
-import { PortraitUploader, PresetSelector } from "./utils"
+import { EditImageToggle, PortraitUploader, PresetSelector } from "./utils"
+import { useEffect, useRef, useState } from "react"
+import { Rnd } from "react-rnd"
+import { cn } from "@/lib/utils"
 
 export function CharacterSheet({ edit } : { edit?: boolean }) {
-  const { state } = useSheetContext()
+  const { state, dispatch } = useSheetContext()
+  const [editImage, setEditImage] = useState<boolean>(false)
+
+  const portraitContainerRef = useRef<HTMLDivElement>(null)
+  const [portraitContainerWidth, setPortraitContainerWidth] = useState(0)
+
+  useEffect(() => {
+    const el = portraitContainerRef.current
+    if (!el) return
+
+    const observer = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        if (entry.contentRect.width) {
+          setPortraitContainerWidth(entry.contentRect.width)
+        }
+      }
+    })
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div className="sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden">
-      <div className="portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] z-0 bg-white">
-        <div
-          className=""
-          style={{ 
-            width: `${state.portraitW}em`,
-            height: `${state.portraitH}em`,
-            left: `${state.portraitX}em`,
-            top: `${state.portraitY}em`,
+    <div ref={portraitContainerRef} className="sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden">
+      <div
+        className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editImage && "z-4")}
+      >
+        <Rnd
+          disableDragging={!editImage}
+          enableResizing={editImage}
+          position={{
+            x: (state.portraitX * (portraitContainerWidth / 560)),
+            y: (state.portraitY * (portraitContainerWidth / 560)),
+          }}
+          size={{
+            width: (state.portraitW * (portraitContainerWidth / 560)),
+            height: (state.portraitH * (portraitContainerWidth / 560))
+          }}
+          onDragStop={(e, d) => {
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitX",
+                value: d.x
+              }
+            })
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitY",
+                value: d.y
+              }
+            })
+          }}
+          onResizeStop={(e, direction, ref, delta, position) => {
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitW",
+                value: parseInt(ref.style.width)
+              }
+            })
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitH",
+                value: parseInt(ref.style.height)
+              }
+            })
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitX",
+                value: position.x
+              }
+            })
+            dispatch({
+              type: "SET_FIELD",
+              payload: {
+                key: "portraitY",
+                value: position.y
+              }
+            })
           }}
         >
           <Image 
+            className={`pointer-events-none ${editImage ? "opacity-30" : ""}`}
             src={state.portrait}
             alt={state.romajiName1}
             fill
           />
-        </div>
-      </div>
-      <div className="fields-container absolute w-full h-full z-2">
-        <FieldsRenderer edit={edit} />
+        </Rnd>
       </div>
       {
         edit &&
-          <div className="@container utils-container absolute w-full h-full">
-            <PortraitUploader />
-            <PresetSelector />
+          <div className="utils-container @container absolute w-full h-full">
+            <PresetSelector classname={cn(editImage && "pointer-events-none")} />
+            <PortraitUploader classname={cn(editImage && "pointer-events-none")} />
+            <EditImageToggle editImage={editImage} setEditImage={setEditImage} />
           </div>
       }
+      <div className={cn("fields-container absolute w-full h-full z-2", editImage && 'pointer-events-none')}>
+        <FieldsRenderer edit={edit} />
+      </div>
       <div
         style={{
           width: '100%',
