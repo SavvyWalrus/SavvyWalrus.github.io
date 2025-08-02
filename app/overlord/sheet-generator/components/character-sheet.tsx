@@ -32,7 +32,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   }, [])
 
   return (
-    <div ref={portraitContainerRef} className="sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden">
+    <div ref={portraitContainerRef} className={cn("sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
       <div
         className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editImage && "z-4")}
       >
@@ -40,8 +40,8 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
           disableDragging={!editImage}
           enableResizing={editImage}
           position={{
-            x: (state.portraitX * (portraitContainerWidth / 560)),
-            y: (state.portraitY * (portraitContainerWidth / 560)),
+            x: (state.portraitX),
+            y: (state.portraitY),
           }}
           size={{
             width: (state.portraitW * (portraitContainerWidth / 560)),
@@ -68,14 +68,14 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
               type: "SET_FIELD",
               payload: {
                 key: "portraitW",
-                value: parseInt(ref.style.width)
+                value: (parseInt(ref.style.width) * (560 / portraitContainerWidth))
               }
             })
             dispatch({
               type: "SET_FIELD",
               payload: {
                 key: "portraitH",
-                value: parseInt(ref.style.height)
+                value: (parseInt(ref.style.height) * (560 / portraitContainerWidth))
               }
             })
             dispatch({
@@ -124,12 +124,14 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
         {
           edit ?
             <Image 
+              className="pointer-events-none"
               src="/overlord/templates/Input-Template.png"
               alt="sheet template"
               fill
             />
             :
             <Image 
+              className="pointer-events-none"
               src={state.template}
               alt="sheet template"
               fill

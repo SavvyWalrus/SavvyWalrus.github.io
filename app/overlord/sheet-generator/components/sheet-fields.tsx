@@ -621,7 +621,7 @@ function Racials({ edit } : { edit?: boolean }) {
       })}
 
       {
-        state.raceOthers && !edit ? (() => {
+        !edit && state.raceOthers && state.visibleRacialClasses > 0 ? (() => {
           const othersTop = 61.6 + (3.78 * state.visibleRacialClasses)
 
           return (
@@ -795,7 +795,7 @@ function Classes({ edit } : { edit?: boolean }) {
       })}
 
       {
-        !edit && state.jobOthers ? (() => {
+        !edit && state.jobOthers && state.visibleJobClasses > 0 ? (() => {
           let othersTopOffset
 
           if (state.visibleRacialClasses > 0) {
