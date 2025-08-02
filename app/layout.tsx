@@ -38,7 +38,7 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <AppSidebar />
-            <main className="w-full overflow-x-auto">
+            <main className="w-full">
               <div className="fixed top-0 z-50">
                 <div className="p-1 sticky left-0">
                   <SidebarTrigger />

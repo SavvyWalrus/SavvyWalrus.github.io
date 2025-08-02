@@ -32,7 +32,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   }, [])
 
   return (
-    <div ref={portraitContainerRef} className={cn("sheet-container relative min-h-[50rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
+    <div ref={portraitContainerRef} className={cn("sheet-container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
       <div
         className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editImage && "z-4")}
       >
