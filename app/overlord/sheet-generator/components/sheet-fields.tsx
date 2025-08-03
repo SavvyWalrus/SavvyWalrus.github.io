@@ -164,16 +164,20 @@ function Names({ edit } : { edit?: boolean }) {
   // Capitalizes all text other than that in parentheses and then wraps all letters 
   // following the first in a span, applying the passed in className
   const transformName = (name: string, className: string) => {
-    if (!name) return <></>
+    if (!name?.trim()) return <></>
 
     const formattedName = name.split(' ').map((word, index) => {
+      if (!word || word.length == 0) return
+
       // Preserve the case for text inside parentheses
       if (word.startsWith('(')) {
         return <span key={index}>{word} </span>
       }
 
       const firstLetter = word[0].toUpperCase()
-      const restOfLetters = word.slice(1).toUpperCase()
+      let restOfLetters
+
+      restOfLetters = word.length > 0 ? word.slice(1).toUpperCase() : ""
       
       return <span key={index}>{firstLetter}<span className={className}>{restOfLetters} </span></span>
     })
