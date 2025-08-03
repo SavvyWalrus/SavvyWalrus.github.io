@@ -533,7 +533,7 @@ function Racials({ edit } : { edit?: boolean }) {
                   top: `${othersTop}cqw`
                 }}
               >
-                ■■■■■■■■■■■■■■■■■■■■■■■
+                ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
               </p>
               <p
                 className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2 font-[DeepdeneRoman]"
@@ -585,7 +585,7 @@ function Racials({ edit } : { edit?: boolean }) {
             }}
             key={`racial-mask-${index}`}
           >
-            ■■■■■■■■■■■■■■■■■■■■■■■
+            ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
           </p>
         )
       }) : <></>}
@@ -705,7 +705,7 @@ function Classes({ edit } : { edit?: boolean }) {
                   top: `${othersTopOffset}cqw`
                 }}
               >
-                ■■■■■■■■■■■■■■■■■■■■■■■
+                ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
               </p>
               <p
                 className="absolute left-[55.65cqw] text-[1.2cqw] bg-[#eae5e2] z-2 font-[DeepdeneRoman]"
@@ -757,7 +757,7 @@ function Classes({ edit } : { edit?: boolean }) {
             }}
             key={`racial-mask-${index}`}
           >
-            ■■■■■■■■■■■■■■■■■■■■■■■
+            ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
           </p>
         )
       })}
