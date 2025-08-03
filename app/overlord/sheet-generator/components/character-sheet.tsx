@@ -31,9 +31,9 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   }, [])
 
   return (
-    <div ref={sheetContainerRef} className={cn("sheet-container @container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
+    <div ref={sheetContainerRef} className="sheet-container @container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden">
       <div
-        className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editPortrait && "z-4")}
+        className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editPortrait && "z-4", !edit && "pointer-events-none")}
       >
         <Rnd
           disableDragging={!editPortrait}
@@ -143,7 +143,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       </div>
       {
         !edit &&
-          <div className="absolute top-[0.5cqw] left-[77cqw] pointer-events-auto z-3">
+          <div className="absolute top-[0.5cqw] left-[77cqw] z-3">
             <SheetDownloader
               characterSheetRef={sheetContainerRef}
             />
