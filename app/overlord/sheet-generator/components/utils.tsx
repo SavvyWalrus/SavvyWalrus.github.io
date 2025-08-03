@@ -146,13 +146,13 @@ export function PortraitUploader({ classname } : { classname?: string }) {
 
     const file = event.target.files[0]
     
-    if (file) {
-      const url = URL.createObjectURL(file)
-      const fileName = file.name
-
-      setImageURL(url)
-      updateOptions(url, fileName)
+    const reader = new FileReader()
+    reader.onload = () => {
+      const dataUrl = reader.result as string
+      setImageURL(dataUrl)
+      updateOptions(dataUrl, file.name)
     }
+    reader.readAsDataURL(file);
   }
 
   return (
@@ -233,7 +233,6 @@ export function PortraitUploader({ classname } : { classname?: string }) {
 export function PresetSelector({ classname } : { classname?: string }) {
   const { preset, setPreset } = useSheetContext()
   const [menuOpen, setMenuOpen] = React.useState(false)
-  const [options, setOptions] = useState<Preset[]>(presets)
 
   return (
     <div className={cn("absolute top-[0.5cqw] left-[2cqw] z-3", classname)}>
@@ -248,7 +247,7 @@ export function PresetSelector({ classname } : { classname?: string }) {
             <p className="max-w-full truncate">
               {
                 preset
-                  ? options.find((opt) => opt.loc === preset)?.label
+                  ? presets.find((opt) => opt.loc === preset)?.label
                   : "Select preset..."
               }
             </p>
@@ -259,7 +258,7 @@ export function PresetSelector({ classname } : { classname?: string }) {
           <Command>
             <CommandList>
               <CommandGroup>
-                {options.map((opt) => (
+                {presets.map((opt) => (
                   <CommandItem
                     key={opt.loc}
                     value={opt.loc}
@@ -331,7 +330,7 @@ export function SheetDownloader({
 
     try {
       const blob = await htmlToImage.toBlob(node, {
-        pixelRatio: 3,
+        pixelRatio: Math.max(3, window.devicePixelRatio || 1),
         backgroundColor: "#ffffff",
         style: { transform: "none", transformOrigin: "top left" },
         cacheBust: true,

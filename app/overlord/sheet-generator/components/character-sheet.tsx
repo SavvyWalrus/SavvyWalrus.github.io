@@ -1,7 +1,6 @@
 "use client"
 
 import { useSheetContext } from "./sheet-context"
-import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
 import { EditPortraitToggle, PortraitUploader, PresetSelector, SheetDownloader } from "./utils"
 import { useEffect, useRef, useState } from "react"
@@ -20,7 +19,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
     if (!el) return
 
     const observer = new ResizeObserver(entries => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         if (entry.contentRect.width) {
           setSheetContainerWidth(entry.contentRect.width)
         }
@@ -94,8 +93,9 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
             })
           }}
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
-            className={`pointer-events-none absolute top-0 left-0 w-full h-full object-cover ${editPortrait ? "opacity-30" : ""}`}
+            className={`pointer-events-none absolute top-0 left-0 w-full h-full object-fit ${editPortrait ? "opacity-30" : ""}`}
             src={state.portrait}
             alt={state.romajiName1}
           />
@@ -122,17 +122,23 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       >
         {
           edit ?
-            <img 
-              className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover"
-              src="/overlord/templates/Input-Template.png"
-              alt="sheet template"
-            />
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                className="pointer-events-none absolute top-0 left-0 w-full h-full object-fit"
+                src="/overlord/templates/Input-Template.png"
+                alt="sheet template"
+              />
+            </>
             :
-            <img 
-              className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover"
-              src={state.template}
-              alt="sheet template"
-            />
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                className="pointer-events-none absolute top-0 left-0 w-full h-full object-fit"
+                src={state.template}
+                alt="sheet template"
+              />
+            </>
         }
       </div>
       {
