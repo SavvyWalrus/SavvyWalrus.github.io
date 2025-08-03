@@ -175,9 +175,7 @@ function Names({ edit } : { edit?: boolean }) {
       }
 
       const firstLetter = word[0].toUpperCase()
-      let restOfLetters
-
-      restOfLetters = word.length > 0 ? word.slice(1).toUpperCase() : ""
+      const restOfLetters = word.length > 0 ? word.slice(1).toUpperCase() : ""
       
       return <span key={index}>{firstLetter}<span className={className}>{restOfLetters} </span></span>
     })
