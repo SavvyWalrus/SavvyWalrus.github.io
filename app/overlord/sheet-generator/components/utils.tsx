@@ -1,6 +1,6 @@
 import { Dispatch, RefObject, SetStateAction, useEffect } from "react"
 import { useState } from "react"
-import { useSheetContext } from "./sheet-context"
+import { SheetState, useSheetContext } from "./sheet-context"
 import React from "react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
@@ -366,5 +366,90 @@ export function SheetDownloader({
     >
       <p className="max-w-full truncate mx-auto">Download as Image</p>
     </Button>
+  )
+}
+
+export function SettingsExporter() {
+  const { state } = useSheetContext()
+  const [loading, setLoading] = useState<boolean>(false)
+
+  function downloadJSON() {
+    setLoading(true)
+
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = state.romajiName1
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+
+    setLoading(false)
+  }
+
+  return (
+    <Button
+      data-no-export
+      disabled={loading}
+      variant="secondary"
+      className={cn("text-[1.5cqw] text-ellipsis w-[17cqw] h-[3.7cqw] justify-between")}
+      onClick={downloadJSON}
+    >
+      <p className="max-w-full truncate mx-auto">Export Settings</p>
+    </Button>
+  )
+}
+
+export function SettingsImporter() {
+  const { state, dispatch } = useSheetContext()
+  const [loading, setLoading] = useState<boolean>(false)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
+  const openPicker = () => inputRef.current?.click()
+
+  const importJSON = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoading(true)
+
+    try {
+      const file = e.target.files?.[0]
+      if (inputRef.current) inputRef.current.value = ""
+      if (!file) return
+
+      const data = JSON.parse(await file.text())
+      const stateKeys = new Set(Object.keys(state ?? {}))
+      const entries = Object.entries(data as any)
+        .filter(([k]) => stateKeys.has(k))
+
+      if (entries.length === 0) {
+        throw new Error("No applicable settings found in file.");
+      }
+
+      const payload = Object.fromEntries(entries) as SheetState
+      dispatch({ type: "SET", payload })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="application/json,.json"
+        style={{ display: "none" }}
+        onChange={importJSON}
+      />
+      <Button
+        data-no-export
+        disabled={loading}
+        variant="secondary"
+        className={cn("text-[1.5cqw] text-ellipsis w-[17cqw] h-[3.7cqw] justify-between")}
+        onClick={openPicker}
+      >
+        <p className="max-w-full truncate mx-auto">Import Settings</p>
+      </Button>
+    </>
   )
 }

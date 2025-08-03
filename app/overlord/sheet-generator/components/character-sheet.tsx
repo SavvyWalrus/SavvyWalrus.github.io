@@ -2,7 +2,7 @@
 
 import { useSheetContext } from "./sheet-context"
 import { FieldsRenderer } from "./sheet-fields"
-import { EditPortraitToggle, PortraitUploader, PresetSelector, SheetDownloader } from "./utils"
+import { EditPortraitToggle, PortraitUploader, PresetSelector, SettingsExporter, SettingsImporter, SheetDownloader } from "./utils"
 import { useEffect, useRef, useState } from "react"
 import { Rnd } from "react-rnd"
 import { cn } from "@/lib/utils"
@@ -143,11 +143,19 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       </div>
       {
         !edit &&
-          <div className="absolute top-[0.5cqw] left-[77cqw] z-3">
-            <SheetDownloader
-              characterSheetRef={sheetContainerRef}
-            />
-          </div>
+          <>
+            <div className="absolute top-[0.5cqw] right-[42cqw] z-3">
+              <SettingsImporter />
+            </div>
+            <div className="absolute top-[0.5cqw] right-[24cqw] z-3">
+              <SettingsExporter />
+            </div>
+            <div className="absolute top-[0.5cqw] left-[77cqw] z-3">
+              <SheetDownloader
+                characterSheetRef={sheetContainerRef}
+              />
+            </div>
+          </>
       }
     </div>
   )
