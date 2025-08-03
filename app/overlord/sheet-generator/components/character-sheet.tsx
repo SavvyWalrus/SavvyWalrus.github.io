@@ -3,7 +3,7 @@
 import { useSheetContext } from "./sheet-context"
 import Image from "next/image"
 import { FieldsRenderer } from "./sheet-fields"
-import { EditPortraitToggle, PortraitUploader, PresetSelector } from "./utils"
+import { EditPortraitToggle, PortraitUploader, PresetSelector, SheetDownloader } from "./utils"
 import { useEffect, useRef, useState } from "react"
 import { Rnd } from "react-rnd"
 import { cn } from "@/lib/utils"
@@ -12,17 +12,17 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   const { state, dispatch } = useSheetContext()
   const [editPortrait, setEditPortrait] = useState<boolean>(false)
 
-  const portraitContainerRef = useRef<HTMLDivElement>(null)
-  const [portraitContainerWidth, setPortraitContainerWidth] = useState(0)
+  const sheetContainerRef = useRef<HTMLDivElement>(null)
+  const [sheetContainerWidth, setSheetContainerWidth] = useState(0)
 
   useEffect(() => {
-    const el = portraitContainerRef.current
+    const el = sheetContainerRef.current
     if (!el) return
 
     const observer = new ResizeObserver(entries => {
       for (let entry of entries) {
         if (entry.contentRect.width) {
-          setPortraitContainerWidth(entry.contentRect.width)
+          setSheetContainerWidth(entry.contentRect.width)
         }
       }
     })
@@ -32,7 +32,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
   }, [])
 
   return (
-    <div ref={portraitContainerRef} className={cn("sheet-container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
+    <div ref={sheetContainerRef} className={cn("sheet-container @container relative min-h-[45rem] aspect-[7/10] bg-white overflow-hidden", !edit && "pointer-events-none")}>
       <div
         className={cn("portrait-container absolute left-[13.95%] top-[6.95%] w-[29.7%] h-[63.5%] bg-white", editPortrait && "z-4")}
       >
@@ -44,8 +44,8 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
             y: (state.portraitY),
           }}
           size={{
-            width: (state.portraitW * (portraitContainerWidth / 560)),
-            height: (state.portraitH * (portraitContainerWidth / 560))
+            width: (state.portraitW * (sheetContainerWidth / 560)),
+            height: (state.portraitH * (sheetContainerWidth / 560))
           }}
           onDragStop={(e, d) => {
             dispatch({
@@ -68,14 +68,14 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
               type: "SET_FIELD",
               payload: {
                 key: "portraitW",
-                value: (parseInt(ref.style.width) * (560 / portraitContainerWidth))
+                value: (parseInt(ref.style.width) * (560 / sheetContainerWidth))
               }
             })
             dispatch({
               type: "SET_FIELD",
               payload: {
                 key: "portraitH",
-                value: (parseInt(ref.style.height) * (560 / portraitContainerWidth))
+                value: (parseInt(ref.style.height) * (560 / sheetContainerWidth))
               }
             })
             dispatch({
@@ -94,11 +94,10 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
             })
           }}
         >
-          <Image 
-            className={`pointer-events-none ${editPortrait ? "opacity-30" : ""}`}
+          <img 
+            className={`pointer-events-none absolute top-0 left-0 w-full h-full object-cover ${editPortrait ? "opacity-30" : ""}`}
             src={state.portrait}
             alt={state.romajiName1}
-            fill
           />
         </Rnd>
       </div>
@@ -123,21 +122,27 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
       >
         {
           edit ?
-            <Image 
-              className="pointer-events-none"
+            <img 
+              className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover"
               src="/overlord/templates/Input-Template.png"
               alt="sheet template"
-              fill
             />
             :
-            <Image 
-              className="pointer-events-none"
+            <img 
+              className="pointer-events-none absolute top-0 left-0 w-full h-full object-cover"
               src={state.template}
               alt="sheet template"
-              fill
             />
         }
       </div>
+      {
+        !edit &&
+          <div className="absolute top-[0.5cqw] left-[77cqw] pointer-events-auto z-3">
+            <SheetDownloader
+              characterSheetRef={sheetContainerRef}
+            />
+          </div>
+      }
     </div>
   )
 }

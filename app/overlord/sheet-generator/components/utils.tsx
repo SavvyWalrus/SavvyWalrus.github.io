@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, RefObject, SetStateAction, useEffect } from "react"
 import { useState } from "react"
 import { useSheetContext } from "./sheet-context"
 import React from "react"
@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils"
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { useRef } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
-import { deepdeneRoman } from "./sheet-fields"
+import * as htmlToImage from 'html-to-image'
+import "../../styles/fonts.css"
 
 interface Portrait {
   loc: string
@@ -298,21 +299,73 @@ export function EditPortraitToggle({
 }) {
   return (
     <div
-      className="absolute flex top-[1cqw] left-[82cqw] z-5"
+      className="absolute flex top-[1cqw] right-[1cqw] z-5"
     >
       <p
-        className="text-[2.5cqw]"
-        style={deepdeneRoman.style}
-      >
+        className="text-[2.2cqw] font-[DeepdeneRoman]">
         Edit Portrait:
       </p>
       <Checkbox
         checked={editPortrait}
-        className="!bg-white mx-[1cqw] my-[0.5cqw]"
+        className="!bg-white mx-[1cqw] my-[0.7cqw]"
         onCheckedChange={() =>
           setEditPortrait(!editPortrait)
         }
       />
     </div>
+  )
+}
+
+export function SheetDownloader({
+  characterSheetRef,
+}: {
+  characterSheetRef: RefObject<HTMLDivElement | null>
+}) {
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleDownload = async () => {
+    const node = characterSheetRef.current
+    if (!node) return
+
+    setLoading(true)
+
+    try {
+      const blob = await htmlToImage.toBlob(node, {
+        pixelRatio: 3,
+        backgroundColor: "#ffffff",
+        style: { transform: "none", transformOrigin: "top left" },
+        cacheBust: true,
+        filter: (n) => !(n instanceof Element && n.hasAttribute("data-no-export")),
+      })
+
+      if (!blob) return
+
+      const url = URL.createObjectURL(blob)
+
+      const link = document.createElement('a')
+      link.href = url
+      link.download = "character-sheet"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      console.error("Download failed:", e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Button
+      data-no-export
+      disabled={loading}
+      variant="secondary"
+      className={cn("text-[1.5cqw] text-ellipsis w-[21.1cqw] h-[3.7cqw] justify-between")}
+      onClick={handleDownload}
+    >
+      <p className="max-w-full truncate mx-auto">Download as Image</p>
+    </Button>
   )
 }
