@@ -209,7 +209,7 @@ function Names({ edit } : { edit?: boolean }) {
             classname="absolute top-[14cqw] left-[45cqw] w-[29.5cqw] h-[3cqw]"
           />
           :
-          <p className="absolute top-[14.5cqw] left-[45cqw] text-[4.3cqw] font-bold tracking-[0.1cqw] font-[PackardAntique]">
+          <p className={cn("absolute left-[45cqw] text-[4.3cqw] font-bold tracking-[0.1cqw] font-[PackardAntique]", state.romajiSecondaryName ? "top-[13.5cqw]" : "top-[14.5cqw]")}>
             {transformName(state.romajiName2, "text-[3.1cqw]")}
           </p>
       }
