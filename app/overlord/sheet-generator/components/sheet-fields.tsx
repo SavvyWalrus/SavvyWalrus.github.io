@@ -811,11 +811,14 @@ function LevelsData({ edit } : { edit?: boolean }) {
                 field="totalJobLevels"
                 classname="absolute top-[97cqw] left-[86.5cqw] h-[4cqw] w-[11cqw]"
               />
+              <p className="absolute top-[93.9cqw] right-[21.6cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw] font-[DeepdeneRoman]">
+                {state.totalRaceLevels + state.totalJobLevels}
+              </p>
             </>
             :
             <>
               <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw] font-[DeepdeneRoman]">
-                <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalLevels} Total Levels
+                <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalRaceLevels + state.totalJobLevels} Total Levels
               </p>
               <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[DeepdeneRoman]">
                 Racial Levels
