@@ -418,7 +418,7 @@ export function SettingsImporter() {
 
       const data = JSON.parse(await file.text())
       const stateKeys = new Set(Object.keys(state ?? {}))
-      const entries = Object.entries(data as any)
+      const entries = Object.entries(data as SheetState)
         .filter(([k]) => stateKeys.has(k))
 
       if (entries.length === 0) {
