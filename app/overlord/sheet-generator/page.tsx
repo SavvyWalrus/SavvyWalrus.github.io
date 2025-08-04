@@ -15,27 +15,27 @@ export default function OverlordSheetGenerator() {
     <SheetProvider>
       <div className="justify-center h-[90%] w-full min-w-fit text-black">
         <div className="flex justify-center py-3 gap-3">
-          <div className="flex items-center ml-13">
+          <div className="flex items-center ml-13 bg-background text-foreground">
             <Switch
               checked={sideBySide}
               onCheckedChange={() => {setSideBySide(!sideBySide)}}
               className="data-[state=checked]:bg-purple-500"
             />
             <Label
-              className="text-white font-bold mx-2"
+              className="font-bold mx-2"
             >
               Side-by-side
             </Label>
           </div>
           {
             !sideBySide ?
-              <div className="flex items-center">
+              <div className="flex items-center bg-background text-foreground">
                 <Checkbox
                   checked={edit}
                   onCheckedChange={() => {setEdit(!edit)}}
                 />
                 <Label
-                  className="text-white font-bold mx-2"
+                  className="font-bold mx-2"
                 >
                   Edit Mode
                 </Label>
