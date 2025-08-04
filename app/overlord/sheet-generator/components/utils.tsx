@@ -23,9 +23,10 @@ interface Preset {
   label: string
 }
 
-interface Template {
+export interface Template {
   loc: string
   label: string
+  inTemplate: string
 }
 
 const portraits: Portrait[] = [
@@ -114,14 +115,16 @@ const presetFilenames: string[] = [
   "Yuri Alpha (α).json",
 ]
 
-const templateFilenames: Template[] = [
+export const templates: Template[] = [
   {
     loc: "/overlord/templates/Heteromorph-Demihuman.png",
-    label: "Heteromorph-Demihuman"
+    label: "Heteromorph-Demihuman",
+    inTemplate: "/overlord/templates/Input-Template.png"
   },
   {
     loc: "/overlord/templates/Humanoid.png",
-    label: "Humanoid"
+    label: "Humanoid",
+    inTemplate: "/overlord/templates/Input-Template-Humanoid.png"
   }
 ]
 
@@ -323,7 +326,7 @@ export function TemplateSelector({ classname } : { classname?: string }) {
             <p className="max-w-full truncate">
               {
                 selectedTemplateOnce
-                  ? templateFilenames.find((opt) => opt.loc === state.template)?.label
+                  ? templates.find((opt) => opt.loc === state.template)?.label
                   : "Select template..."
               }
             </p>
@@ -334,7 +337,7 @@ export function TemplateSelector({ classname } : { classname?: string }) {
           <Command>
             <CommandList>
               <CommandGroup>
-                {templateFilenames.map((opt) => (
+                {templates.map((opt) => (
                   <CommandItem
                     key={opt.loc}
                     value={opt.loc}

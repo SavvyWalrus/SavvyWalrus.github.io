@@ -781,16 +781,14 @@ function LevelsData({ edit } : { edit?: boolean }) {
                 classname="absolute top-[97cqw] left-[86.5cqw] h-[4cqw] w-[11cqw]"
               />
             </>
-            :
-            <>
-              <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                Class Levels
-              </p>
-              <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                {state.totalJobLevels} acquired total
-              </p>
-            </>
+            : <></>
         }
+        <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          Class Levels
+        </p>
+        <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          {state.totalJobLevels} acquired total
+        </p>
         <div className="job-level-bar absolute top-[98.35cqw] left-[55.05cqw] max-w-[31.1cqw] overflow-hidden">
           <StatBar height={0.86} color="#03a5a8" lengthAtOneHundred={31.1} val={state.totalJobLevels} />
         </div>
@@ -811,29 +809,24 @@ function LevelsData({ edit } : { edit?: boolean }) {
                 field="totalJobLevels"
                 classname="absolute top-[97cqw] left-[86.5cqw] h-[4cqw] w-[11cqw]"
               />
-              <p className="absolute top-[93.9cqw] right-[21.6cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw] font-[DeepdeneRoman]">
-                {state.totalRaceLevels + state.totalJobLevels}
-              </p>
             </>
-            :
-            <>
-              <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw] font-[DeepdeneRoman]">
-                <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalRaceLevels + state.totalJobLevels} Total Levels
-              </p>
-              <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                Racial Levels
-              </p>
-              <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                Class Levels
-              </p>
-              <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                {state.totalRaceLevels} acquired total
-              </p>
-              <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[DeepdeneRoman]">
-                {state.totalJobLevels} acquired total
-              </p>
-            </>
+            : <></>
         }
+        <p className="absolute top-[93.8cqw] left-[55cqw] text-[1.5cqw] [word-spacing:0.1cqw] tracking-[0.01cqw] font-[DeepdeneRoman]">
+          <RaisedBracket>[</RaisedBracket>Racial Levels<RaisedBracket>]</RaisedBracket> + <RaisedBracket>[</RaisedBracket>Class Levels<RaisedBracket>]</RaisedBracket> = {state.totalRaceLevels + state.totalJobLevels} Total Levels
+        </p>
+        <p className="absolute top-[96.2cqw] left-[56.4cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          Racial Levels
+        </p>
+        <p className="absolute top-[96.2cqw] left-[77.9cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          Class Levels
+        </p>
+        <p className="absolute top-[99.2cqw] left-[55.2cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          {state.totalRaceLevels} acquired total
+        </p>
+        <p className="absolute top-[99.2cqw] right-[13.95cqw] text-[1.4cqw] font-[DeepdeneRoman]">
+          {state.totalJobLevels} acquired total
+        </p>
         <div className="racial-level-bar absolute top-[98.35cqw] left-[55.05cqw] max-w-[31.1cqw] overflow-hidden">
           <StatBar height={0.86} color="#af5845" lengthAtOneHundred={31.1} val={state.totalRaceLevels} />
         </div>

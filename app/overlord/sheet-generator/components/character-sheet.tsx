@@ -2,7 +2,7 @@
 
 import { useSheetContext } from "./sheet-context"
 import { FieldsRenderer } from "./sheet-fields"
-import { EditPortraitToggle, PortraitUploader, PresetSelector, SettingsExporter, SettingsImporter, SheetDownloader, TemplateSelector } from "./utils"
+import { EditPortraitToggle, PortraitUploader, PresetSelector, SettingsExporter, SettingsImporter, SheetDownloader, templates, TemplateSelector } from "./utils"
 import { useEffect, useRef, useState } from "react"
 import { Rnd } from "react-rnd"
 import { cn } from "@/lib/utils"
@@ -127,7 +127,9 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 className="pointer-events-none absolute top-0 left-0 w-full h-full object-fit"
-                src="/overlord/templates/Input-Template.png"
+                src={
+                  templates.find(template => template.loc === state.template)?.inTemplate
+                }
                 alt="sheet template"
               />
             </>
