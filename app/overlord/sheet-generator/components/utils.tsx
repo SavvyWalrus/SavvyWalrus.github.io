@@ -23,6 +23,11 @@ interface Preset {
   label: string
 }
 
+interface Template {
+  loc: string
+  label: string
+}
+
 const portraits: Portrait[] = [
   {
     loc: "/overlord/portraits/01-Momonga.jpg",
@@ -107,6 +112,17 @@ const presetFilenames: string[] = [
   "Solution Epsilon (ε).json",
   "Victim.json",
   "Yuri Alpha (α).json",
+]
+
+const templateFilenames: Template[] = [
+  {
+    loc: "/overlord/templates/Heteromorph-Demihuman.png",
+    label: "Heteromorph-Demihuman"
+  },
+  {
+    loc: "/overlord/templates/Humanoid.png",
+    label: "Humanoid"
+  }
 ]
 
 const presets: Preset[] = presetFilenames.map((filename) => ({
@@ -276,6 +292,73 @@ export function PresetSelector({ classname } : { classname?: string }) {
                       className={cn(
                         "ml-auto",
                         preset === opt.loc ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  )
+}
+
+export function TemplateSelector({ classname } : { classname?: string }) {
+  const { state, dispatch } = useSheetContext()
+  const [selectedTemplateOnce, setSelectedTemplateOnce] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = React.useState(false)
+
+  return (
+    <div className={cn("absolute top-[0.5cqw] left-[50.4cqw] z-3", classname)}>
+      <Popover open={menuOpen} onOpenChange={setMenuOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="secondary"
+            role="combobox"
+            aria-expanded={menuOpen}
+            className="text-[1.5cqw] overflow-ellipsis w-[25cqw] h-[3.7cqw] justify-between"
+          >
+            <p className="max-w-full truncate">
+              {
+                selectedTemplateOnce
+                  ? templateFilenames.find((opt) => opt.loc === state.template)?.label
+                  : "Select template..."
+              }
+            </p>
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0">
+          <Command>
+            <CommandList>
+              <CommandGroup>
+                {templateFilenames.map((opt) => (
+                  <CommandItem
+                    key={opt.loc}
+                    value={opt.loc}
+                    onSelect={(templateName) => {
+                      dispatch({
+                        type: "SET_FIELD",
+                        payload: {
+                          key: "template",
+                          value: templateName
+                        }
+                      })
+                      setSelectedTemplateOnce(true)
+                      setMenuOpen(false)
+                    }}
+                  >
+                    <p
+                      className="text-nowrap"
+                    >
+                      {opt.label}
+                    </p>
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        selectedTemplateOnce && state.template === opt.loc ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

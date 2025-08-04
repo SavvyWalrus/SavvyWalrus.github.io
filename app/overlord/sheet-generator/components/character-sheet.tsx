@@ -2,7 +2,7 @@
 
 import { useSheetContext } from "./sheet-context"
 import { FieldsRenderer } from "./sheet-fields"
-import { EditPortraitToggle, PortraitUploader, PresetSelector, SettingsExporter, SettingsImporter, SheetDownloader } from "./utils"
+import { EditPortraitToggle, PortraitUploader, PresetSelector, SettingsExporter, SettingsImporter, SheetDownloader, TemplateSelector } from "./utils"
 import { useEffect, useRef, useState } from "react"
 import { Rnd } from "react-rnd"
 import { cn } from "@/lib/utils"
@@ -106,6 +106,7 @@ export function CharacterSheet({ edit } : { edit?: boolean }) {
           <div className="utils-container @container absolute w-full h-full">
             <PresetSelector classname={cn(editPortrait && "pointer-events-none")} />
             <PortraitUploader classname={cn(editPortrait && "pointer-events-none")} />
+            <TemplateSelector classname={cn(editPortrait && "pointer-events-none")} />
             <EditPortraitToggle editPortrait={editPortrait} setEditPortrait={setEditPortrait} />
           </div>
       }
